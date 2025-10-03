@@ -37,8 +37,11 @@
 
   <style>
     body{font-family:'Open Sans',system-ui,sans-serif}
-    h1,h2,h3,h4{font-family:'Playfair Display',serif}
-    .section{position:relative}
+  h1,h2,h3,h4{font-family:'Playfair Display',serif}
+
+     #nav-links a{font-family:'Playfair Display',serif}
+
+     .logo-height{height:5rem}    .section{position:relative}
     .section::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,rgba(46,125,50,.12),rgba(43,46,115,.12))}
     .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
     .reveal.in{opacity:1;transform:none}
@@ -53,12 +56,12 @@
 
   <!-- NAVBAR -->
   <header class="fixed top-0 inset-x-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100">
-    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-3">
-        <img src="images/logo.jpg" alt="Wyndham Interfaith Network" class="h-12 w-auto" />
+        <img src="images/logo.jpg" alt="Wyndham Interfaith Network" class="logo-height w-auto" />
         <span class="font-semibold text-darkblue">Wyndham Interfaith Network</span>
       </a>
-      <nav class="hidden md:flex items-center gap-6 font-medium">
+      <nav class="hidden md:flex items-center gap-6 font-medium" id="nav-links">
         <a href="Home.html" class="hover:text-brand">Home</a>
         <a href="about.html" class="text-brand">About</a>
         <a href="agenda.html" class="hover:text-brand">Agenda</a>
