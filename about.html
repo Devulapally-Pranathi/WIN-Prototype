@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About – Wyndham Interfaith Network</title>
+  <meta name="description" content="Learn about the Wyndham Interfaith Network: our mission, values, leadership, history, impact and partners." />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT:'#2e7d32', dark:'#1b5e20', light:'#7fbf6d' },
+            darkblue:'#2b2e73', gold:'#f5d66d'
+          },
+          boxShadow: {
+            glow:'0 10px 30px rgba(46,125,50,.25)', mega:'0 20px 60px rgba(0,0,0,.25)'
+          },
+          keyframes:{
+            slideUp:{from:{opacity:0,transform:'translateY(40px)'},to:{opacity:1,transform:'translateY(0)'}},
+            float:{'0%,100%':{transform:'translateY(0)'},'50%':{transform:'translateY(-6px)'}}
+          },
+          animation:{
+            slideUp:'slideUp 1s ease both',
+            float:'float 6s ease-in-out infinite'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body{font-family:'Open Sans',system-ui,sans-serif}
+    h1,h2,h3,h4{font-family:'Playfair Display',serif}
+    .section{position:relative}
+    .section::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,rgba(46,125,50,.12),rgba(43,46,115,.12))}
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.in{opacity:1;transform:none}
+    .pill{display:inline-flex;align-items:center;gap:.5rem;background:#eef7f0;border:1px solid #d7eadc;color:#1b5e20;padding:.35rem .75rem;border-radius:9999px;font-weight:600}
+    .card{border:1px solid #eef0f4;border-radius:16px;background:#fff;transition:transform .25s ease, box-shadow .25s ease}
+    .card:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(0,0,0,.12)}
+    .counter{font-variant-numeric:tabular-nums}
+    .logo-tile{display:flex;align-items:center;justify-content:center;border:1px dashed #d8e2db;border-radius:12px;padding:18px;background:#fafdfb}
+  </style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+  <!-- NAVBAR -->
+  <header class="fixed top-0 inset-x-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/win-logo.png" alt="Wyndham Interfaith Network" class="h-12 w-auto" />
+        <span class="font-semibold text-darkblue">Wyndham Interfaith Network</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 font-medium">
+        <a href="Home.html" class="hover:text-brand">Home</a>
+        <a href="about.html" class="text-brand">About</a>
+        <a href="agenda.html" class="hover:text-brand">Agenda</a>
+        <a href="events.html" class="hover:text-brand">Events</a>
+        <a href="gallery.html" class="hover:text-brand">Gallery</a>
+        <a href="contact.html" class="hover:text-brand">Contact</a>
+        <a href="contact.html#join" class="ml-2 px-4 py-2 rounded-full bg-brand text-white shadow-glow hover:bg-brand-dark transition">Join Us</a>
+      </nav>
+      <button id="menu-btn" class="md:hidden p-2 text-darkblue" aria-label="Open menu">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg border-t border-gray-200">
+      <nav class="px-6 py-4 flex flex-col space-y-4 font-medium">
+        <a href="index.html">Home</a><a href="about.html" class="text-brand">About</a><a href="agenda.html">Agenda</a>
+        <a href="events.html">Events</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+        <a href="contact.html#join" class="px-4 py-2 rounded-full bg-brand text-white text-center">Join Us</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="section mt-16 relative overflow-hidden">
+    <div class="relative max-w-7xl mx-auto px-6 py-16 md:py-20 grid md:grid-cols-2 gap-10 items-center">
+      <div class="reveal">
+        <span class="pill">About WIN</span>
+        <h1 class="mt-3 text-4xl md:text-5xl font-bold text-darkblue">People first. Faithful to community.</h1>
+        <p class="mt-3 text-lg text-gray-700">We’re a volunteer-led network uniting communities across Wyndham through dialogue, celebration, wellbeing, equality and caring for the environment.</p>
+        <div class="mt-6 flex gap-3">
+          <a href="contact.html#join" class="px-5 py-3 rounded-xl bg-brand text-white shadow-glow hover:bg-brand-dark transition">Join the Network</a>
+          <a href="#mission" class="px-5 py-3 rounded-xl border border-darkblue/20 text-darkblue hover:bg-darkblue hover:text-white transition">Our Mission</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1800&auto=format&fit=crop"
+             alt="Community dinner table" class="rounded-2xl shadow-xl w-full h-[360px] object-cover animate-float">
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION / VISION / VALUES -->
+  <section id="mission" class="section bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="card p-6 reveal">
+          <h3 class="text-xl font-semibold text-darkblue">Our Mission</h3>
+          <p class="mt-2 text-gray-700">Create welcoming spaces where people of all faiths (and none) connect, learn and work together for the common good.</p>
+        </div>
+        <div class="card p-6 reveal">
+          <h3 class="text-xl font-semibold text-darkblue">Our Vision</h3>
+          <p class="mt-2 text-gray-700">A Wyndham where respect and friendship cross every boundary, and diversity is celebrated as our strength.</p>
+        </div>
+        <div class="card p-6 reveal">
+          <h3 class="text-xl font-semibold text-darkblue">Our Values</h3>
+          <ul class="mt-2 space-y-2 text-gray-700">
+            <li>• Unity in diversity</li>
+            <li>• Hospitality & dialogue</li>
+            <li>• Inclusion & safety</li>
+            <li>• Service & environmental care</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTORY + TIMELINE -->
+  <section class="section py-16">
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10 items-start">
+      <div class="reveal">
+        <span class="pill">Our Story</span>
+        <h2 class="mt-3 text-3xl md:text-4xl font-bold text-darkblue">Rooted in local friendship</h2>
+        <p class="mt-3 text-gray-700">WIN began as a small group of neighbours and faith leaders meeting over tea to visit each other’s sacred spaces and understand one another. The welcome spread to schools, libraries and parks — and the network grew.</p>
+        <p class="mt-3 text-gray-700">Today, we host interfaith visits, equality forums, wellbeing sessions and community dinners supported by partners across the West.</p>
+      </div>
+      <div class="reveal">
+        <ol class="relative border-s-2 border-brand/30 ps-6 space-y-6">
+          <li>
+            <div class="absolute -start-[11px] w-5 h-5 bg-brand rounded-full border-2 border-white"></div>
+            <h4 class="font-semibold text-darkblue">2012 — Beginnings</h4>
+            <p class="text-gray-700">First informal dialogues and shared meals in Werribee.</p>
+          </li>
+          <li>
+            <div class="absolute -start-[11px] mt-14 w-5 h-5 bg-brand rounded-full border-2 border-white"></div>
+            <h4 class="mt-6 font-semibold text-darkblue">2017 — Multifaith Dinner</h4>
+            <p class="text-gray-700">Hosted our first Multifaith Dinner with community partners.</p>
+          </li>
+          <li>
+            <div class="absolute -start-[11px] mt-28 w-5 h-5 bg-brand rounded-full border-2 border-white"></div>
+            <h4 class="mt-6 font-semibold text-darkblue">2020 — Wellbeing Online</h4>
+            <p class="text-gray-700">Mental health & music meetups kept people connected.</p>
+          </li>
+          <li>
+            <div class="absolute -start-[11px] mt-40 w-5 h-5 bg-brand rounded-full border-2 border-white"></div>
+            <h4 class="mt-6 font-semibold text-darkblue">Now — Growing together</h4>
+            <p class="text-gray-700">Regular visits, equality forums and community celebrations.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT COUNTERS -->
+  <section class="section bg-gray-50 py-14">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-6">
+      <div class="card p-6 text-center reveal">
+        <div class="text-4xl font-bold text-darkblue counter" data-count="1500">0</div>
+        <p class="mt-1 text-gray-600">Participants across Wyndham</p>
+      </div>
+      <div class="card p-6 text-center reveal">
+        <div class="text-4xl font-bold text-darkblue counter" data-count="45">0</div>
+        <p class="mt-1 text-gray-600">Partner organisations & faith groups</p>
+      </div>
+      <div class="card p-6 text-center reveal">
+        <div class="text-4xl font-bold text-darkblue counter" data-count="120">0</div>
+        <p class="mt-1 text-gray-600">Events hosted since founding</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEADERSHIP / BOARD -->
+  <section class="section py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal text-center">
+        <span class="pill">Leadership</span>
+        <h2 class="mt-2 text-3xl md:text-4xl font-bold text-darkblue">Our Committee</h2>
+        <p class="mt-2 text-gray-700">WIN is guided by a volunteer committee with representatives from diverse traditions.</p>
+      </div>
+      <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Member -->
+        <article class="card p-5 reveal text-center">
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800&auto=format&fit=crop" alt="" class="w-28 h-28 object-cover rounded-full mx-auto">
+          <h3 class="mt-3 font-semibold text-darkblue">Aman K.</h3>
+          <p class="text-sm text-gray-600">Chair</p>
+        </article>
+        <article class="card p-5 reveal text-center">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop" alt="" class="w-28 h-28 object-cover rounded-full mx-auto">
+          <h3 class="mt-3 font-semibold text-darkblue">Ree B.</h3>
+          <p class="text-sm text-gray-600">Program Director (Equality)</p>
+        </article>
+        <article class="card p-5 reveal text-center">
+          <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=800&auto=format&fit=crop" alt="" class="w-28 h-28 object-cover rounded-full mx-auto">
+          <h3 class="mt-3 font-semibold text-darkblue">Sandeep B.</h3>
+          <p class="text-sm text-gray-600">Wellbeing Advisor</p>
+        </article>
+        <article class="card p-5 reveal text-center">
+          <img src="https://images.unsplash.com/photo-1541534401786-2077eed87a72?q=80&w=800&auto=format&fit=crop" alt="" class="w-28 h-28 object-cover rounded-full mx-auto">
+          <h3 class="mt-3 font-semibold text-darkblue">Julie M.</h3>
+          <p class="text-sm text-gray-600">Community Engagement</p>
+        </article>
+      </div>
+      <p class="mt-6 text-center text-sm text-gray-600 reveal">*Names reflect roles commonly mentioned in public posts; update with your official committee roster.</p>
+    </div>
+  </section>
+
+  <!-- SERVICES / WHAT WE OFFER -->
+  <section class="section bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal text-center">
+        <span class="pill">What we offer</span>
+        <h2 class="mt-2 text-3xl md:text-4xl font-bold text-darkblue">Programs & Services</h2>
+      </div>
+      <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <article class="card p-6 reveal">
+          <h3 class="font-semibold text-darkblue">Interfaith Visits & Dialogue</h3>
+          <p class="mt-2 text-gray-700">Guided visits to local temples, gurdwaras, churches and more — with Q&A and shared meals.</p>
+        </article>
+        <article class="card p-6 reveal">
+          <h3 class="font-semibold text-darkblue">Wellbeing & Mental Health</h3>
+          <p class="mt-2 text-gray-700">Tea, music and practical tools delivered with our trusted practitioners.</p>
+        </article>
+        <article class="card p-6 reveal">
+          <h3 class="font-semibold text-darkblue">Equality & Respect Forums</h3>
+          <p class="mt-2 text-gray-700">Panels and training that promote safety, respect and bystander action.</p>
+        </article>
+        <article class="card p-6 reveal">
+          <h3 class="font-semibold text-darkblue">Environment & Tree Day</h3>
+          <p class="mt-2 text-gray-700">Hands-on planting days and local eco-care with families and partners.</p>
+        </article>
+        <article class="card p-6 reveal">
+          <h3 class="font-semibold text-darkblue">Cultural Celebrations</h3>
+          <p class="mt-2 text-gray-700">From Karwa Chauth to community dinners—events that showcase the joy of diversity.</p>
+        </article>
+        <article class="card p-6 reveal">
+          <h3 class="font-semibold text-darkblue">Schools & Libraries Engagement</h3>
+          <p class="mt-2 text-gray-700">Talks and activities that build understanding with young people.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPONSORS / DONORS -->
+  <section class="section py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal text-center">
+        <span class="pill">With thanks to</span>
+        <h2 class="mt-2 text-3xl md:text-4xl font-bold text-darkblue">Sponsors & Community Partners</h2>
+        <p class="mt-2 text-gray-700">We’re grateful for the support of local councils, faith communities, services and businesses.</p>
+      </div>
+      <div class="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+        <div class="logo-tile reveal">Wyndham City</div>
+        <div class="logo-tile reveal">Hobsons Bay</div>
+        <div class="logo-tile reveal">Local Faith Councils</div>
+        <div class="logo-tile reveal">Women’s Health West</div>
+        <div class="logo-tile reveal">Community Services</div>
+      </div>
+      <p class="text-sm text-gray-600 text-center mt-4 reveal">Add your official logos here (SVG/PNG). We can link each tile to partner websites.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section bg-gradient-to-br from-darkblue to-brand text-white py-16">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+      <div class="reveal">
+        <h2 class="text-3xl md:text-4xl font-bold">Let’s make Wyndham even more welcoming</h2>
+        <p class="mt-2 text-white/90">Become a member, host a visit, or support a program—there’s a place for you.</p>
+      </div>
+      <div class="reveal flex md:justify-end gap-3">
+        <a href="contact.html#join" class="px-6 py-3 rounded-xl bg-white text-darkblue font-semibold shadow hover:scale-105 transition">Join the Network</a>
+        <a href="contact.html" class="px-6 py-3 rounded-xl bg-white/15 ring-1 ring-white/30 text-white hover:bg-white/20">Partner with us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+      <div class="reveal">
+        <img src="images/win-logo.png" alt="WIN Logo" class="h-14 mb-4" />
+        <p class="text-sm text-gray-300">Building respect, harmony, wellbeing and celebration across Wyndham.</p>
+      </div>
+      <div class="reveal">
+        <h3 class="font-semibold mb-3">Quick Links</h3>
+        <ul class="space-y-2 text-sm text-gray-300">
+          <li><a href="about.html" class="text-white">About</a></li>
+          <li><a href="agenda.html" class="hover:text-white">Agenda</a></li>
+          <li><a href="events.html" class="hover:text-white">Events</a></li>
+          <li><a href="gallery.html" class="hover:text-white">Gallery</a></li>
+          <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <h3 class="font-semibold mb-3">Stay Connected</h3>
+        <p class="text-sm text-gray-300 mb-3">info@wyndhaminterfaith.org</p>
+        <div class="flex gap-4 text-xl">
+          <a href="#" class="hover:text-gold" aria-label="Website">🌐</a>
+          <a href="#" class="hover:text-gold" aria-label="Facebook">📘</a>
+          <a href="#" class="hover:text-gold" aria-label="Instagram">📸</a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-xs text-gray-400 mt-8">© <span id="year"></span> Wyndham Interfaith Network</div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Year + mobile menu
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('menu-btn').onclick = () =>
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+
+    // Reveal on scroll
+    const revealEls=[...document.querySelectorAll('.reveal')];
+    const IO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');IO.unobserve(e.target);}})},{threshold:.25});
+    revealEls.forEach(el=>IO.observe(el));
+
+    // Animate counters 0 -> target
+    function animateCounter(el, target, duration=1500){
+      const t0=performance.now();
+      function step(now){const p=Math.min((now-t0)/duration,1);el.textContent=Math.floor(p*target).toLocaleString(); if(p<1)requestAnimationFrame(step);}
+      requestAnimationFrame(step);
+    }
+    const counters=document.querySelectorAll('.counter');
+    const counterIO=new IntersectionObserver(ents=>{
+      ents.forEach(ent=>{
+        if(ent.isIntersecting){
+          const el=ent.target, val=parseInt(el.dataset.count,10)||0;
+          animateCounter(el,val); counterIO.unobserve(el);
+        }
+      });
+    },{threshold:.6});
+    counters.forEach(c=>counterIO.observe(c));
+  </script>
+</body>
+</html>

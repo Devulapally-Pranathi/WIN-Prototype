@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Events – Wyndham Interfaith Network</title>
+  <meta name="description" content="Explore upcoming and past events from WIN: interfaith visits, wellbeing sessions, equality forums, environment days, and celebrations." />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT:'#2e7d32', dark:'#1b5e20', light:'#7fbf6d' },
+            darkblue:'#2b2e73', gold:'#f5d66d'
+          },
+          boxShadow: {
+            glow:'0 10px 30px rgba(46,125,50,.25)', mega:'0 20px 60px rgba(0,0,0,.25)'
+          },
+          keyframes:{
+            slideUp:{from:{opacity:0,transform:'translateY(40px)'},to:{opacity:1,transform:'translateY(0)'}},
+            float:{'0%,100%':{transform:'translateY(0)'},'50%':{transform:'translateY(-6px)'}}
+          },
+          animation:{
+            slideUp:'slideUp 1s ease both',
+            float:'float 6s ease-in-out infinite'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body{font-family:'Open Sans',system-ui,sans-serif}
+    h1,h2,h3,h4{font-family:'Playfair Display',serif}
+    .section{position:relative}
+    .section::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,rgba(46,125,50,.12),rgba(43,46,115,.12))}
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.in{opacity:1;transform:none}
+    .pill{display:inline-flex;align-items:center;gap:.5rem;background:#eef7f0;border:1px solid #d7eadc;color:#1b5e20;padding:.35rem .75rem;border-radius:9999px;font-weight:600}
+    .chip{font-size:.75rem;padding:.25rem .6rem;border-radius:9999px;border:1px solid #e5e7eb;background:#f8fafc}
+    .tag-free{background:#e8f6ea;color:#1b5e20;border:1px solid #cfead4}
+    .tag-paid{background:#fff7e6;color:#8a5a00;border:1px solid #ffe2a8}
+    .card{border:1px solid #eef0f4;border-radius:16px;background:#fff;transition:transform .25s ease, box-shadow .25s ease}
+    .card:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(0,0,0,.12)}
+    .filter-btn{padding:.5rem .9rem;border-radius:9999px;border:1px solid #e5e7eb;background:#fff}
+    .filter-btn.active{background:#eef7f0;border-color:#cfead4;color:#1b5e20}
+    .drawer{max-height:0;overflow:hidden;transition:max-height .45s ease}
+    .drawer.open{max-height:700px}
+    .counter{font-variant-numeric:tabular-nums}
+    .logo-tile{display:flex;align-items:center;justify-content:center;border:1px dashed #d8e2db;border-radius:12px;padding:18px;background:#fafdfb}
+  </style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+  <!-- NAVBAR -->
+  <header class="fixed top-0 inset-x-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo.jpg" alt="Wyndham Interfaith Network" class="h-12 w-auto" />
+        <span class="font-semibold text-darkblue">Wyndham Interfaith Network</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 font-medium">
+        <a href="Home.html" class="hover:text-brand">Home</a>
+        <a href="about.html" class="hover:text-brand">About</a>
+        <a href="agenda.html" class="hover:text-brand">Agenda</a>
+        <a href="event.html" class="text-brand">Events</a>
+        <a href="gallery.html" class="hover:text-brand">Gallery</a>
+        <a href="contact.html" class="hover:text-brand">Contact</a>
+        <a href="contact.html#join" class="ml-2 px-4 py-2 rounded-full bg-brand text-white shadow-glow hover:bg-brand-dark transition">Join Us</a>
+      </nav>
+      <button id="menu-btn" class="md:hidden p-2 text-darkblue" aria-label="Open menu">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg border-t border-gray-200">
+      <nav class="px-6 py-4 flex flex-col space-y-4 font-medium">
+        <a href="Home.html">Home</a><a href="about.html">About</a><a href="agenda.html">Agenda</a>
+        <a href="event.html" class="text-brand">Events</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+        <a href="contact.html#join" class="px-4 py-2 rounded-full bg-brand text-white text-center">Join Us</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="section mt-16 relative overflow-hidden">
+    <div class="relative max-w-7xl mx-auto px-6 py-16 md:py-20 grid md:grid-cols-2 gap-10 items-center">
+      <div class="reveal">
+        <span class="pill">Events</span>
+        <h1 class="mt-3 text-4xl md:text-5xl font-bold text-darkblue">Show up. Belong. Celebrate.</h1>
+        <p class="mt-3 text-lg text-gray-700">From interfaith visits and wellbeing nights to Tree Day and the Multifaith Dinner — there’s a seat for you. Reserve early; our free events fill fast.</p>
+        <div class="mt-6 flex gap-3">
+          <a href="#upcoming" class="px-5 py-3 rounded-xl bg-brand text-white shadow-glow hover:bg-brand-dark transition">Upcoming</a>
+          <a href="#past" class="px-5 py-3 rounded-xl border border-darkblue/20 text-darkblue hover:bg-darkblue hover:text-white transition">Past Highlights</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1800&auto=format&fit=crop"
+             alt="Community dinner" class="rounded-2xl shadow-xl w-full h-[360px] object-cover animate-float">
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <section class="section bg-gray-50 py-6">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal flex flex-wrap gap-2">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="visits">Visits</button>
+        <button class="filter-btn" data-filter="wellbeing">Wellbeing</button>
+        <button class="filter-btn" data-filter="equality">Equality</button>
+        <button class="filter-btn" data-filter="environment">Environment</button>
+        <button class="filter-btn" data-filter="celebrations">Celebrations</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- UPCOMING EVENTS -->
+  <section id="upcoming" class="section py-14">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-darkblue">Upcoming</h2>
+        <p class="mt-2 text-gray-700">Free and ticketed. Family-friendly. Welcoming to all.</p>
+      </div>
+
+      <div id="event-grid" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Event card template examples -->
+        <article class="card p-0 overflow-hidden reveal event-item" data-tags="visits">
+          <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=1600&auto=format&fit=crop" class="w-full h-44 object-cover" alt="Gurudwara">
+          <div class="p-5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold text-darkblue">Interfaith Visit – Sikh Gurudwara</h3>
+              <span class="tag-free chip">Free</span>
+            </div>
+            <p class="mt-2 text-gray-700">Guided tour, Q&A and langar (shared meal). Experience warm hospitality.</p>
+            <div class="mt-3 flex flex-wrap gap-2 text-sm">
+              <span class="chip">📍 Tarneit</span>
+              <span class="chip">🗓️ Sat 27 Sep • 11:30 AM</span>
+              <span class="chip">🔥 <span class="counter" data-count="12">0</span> seats left</span>
+            </div>
+            <div class="mt-4 flex gap-3">
+              <a href="#" class="px-4 py-2 rounded-lg bg-brand text-white hover:bg-brand-dark" data-open="d1">Read more</a>
+              <a href="#" class="px-4 py-2 rounded-lg border border-gray-200">Reserve</a>
+            </div>
+            <div id="d1" class="drawer mt-4">
+              <p class="text-sm text-gray-700">What to expect: a short intro, head covering provided, remove shoes, respectful photography. Kids welcome.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card p-0 overflow-hidden reveal event-item" data-tags="wellbeing">
+          <img src="https://images.unsplash.com/photo-1604881991720-4c52a2b01f59?q=80&w=1600&auto=format&fit=crop" class="w-full h-44 object-cover" alt="Wellbeing">
+          <div class="p-5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold text-darkblue">Wellbeing Night – Music & Mind</h3>
+              <span class="tag-free chip">Free</span>
+            </div>
+            <p class="mt-2 text-gray-700">Tea, live music and practical mental health tools in a safe, friendly space.</p>
+            <div class="mt-3 flex flex-wrap gap-2 text-sm">
+              <span class="chip">📍 Werribee</span>
+              <span class="chip">🗓️ Fri 10 Oct • 6:30 PM</span>
+              <span class="chip">🎵 Acoustic set</span>
+            </div>
+            <div class="mt-4 flex gap-3">
+              <a href="#" class="px-4 py-2 rounded-lg bg-brand text-white hover:bg-brand-dark" data-open="d2">Read more</a>
+              <a href="#" class="px-4 py-2 rounded-lg border border-gray-200">RSVP</a>
+            </div>
+            <div id="d2" class="drawer mt-4">
+              <p class="text-sm text-gray-700">Facilitated by local practitioners. Light snacks available. Wheelchair accessible venue.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card p-0 overflow-hidden reveal event-item" data-tags="environment">
+          <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1600&auto=format&fit=crop" class="w-full h-44 object-cover" alt="Tree Day">
+          <div class="p-5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold text-darkblue">National Tree Day – Family Planting</h3>
+              <span class="tag-free chip">Free</span>
+            </div>
+            <p class="mt-2 text-gray-700">Hands-on planting with kids’ activities and BBQ. Tools provided.</p>
+            <div class="mt-3 flex flex-wrap gap-2 text-sm">
+              <span class="chip">📍 Wyndham Vale</span>
+              <span class="chip">🗓️ Sun 26 Oct • 9:30 AM</span>
+              <span class="chip">🧤 Gloves provided</span>
+            </div>
+            <div class="mt-4 flex gap-3">
+              <a href="#" class="px-4 py-2 rounded-lg bg-brand text-white hover:bg-brand-dark" data-open="d3">Read more</a>
+              <a href="#" class="px-4 py-2 rounded-lg border border-gray-200">Volunteer</a>
+            </div>
+            <div id="d3" class="drawer mt-4">
+              <p class="text-sm text-gray-700">Bring a hat and water bottle. Suitable for all ages. Limited parking; consider carpooling.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card p-0 overflow-hidden reveal event-item" data-tags="equality">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1600&auto=format&fit=crop" class="w-full h-44 object-cover" alt="Equality">
+          <div class="p-5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold text-darkblue">Equality & Respect Forum</h3>
+              <span class="tag-free chip">Free</span>
+            </div>
+            <p class="mt-2 text-gray-700">Panel with local leaders and services on building safer, more respectful communities.</p>
+            <div class="mt-3 flex flex-wrap gap-2 text-sm">
+              <span class="chip">📍 Hoppers Crossing</span>
+              <span class="chip">🗓️ Thu 6 Nov • 6:00 PM</span>
+              <span class="chip">🎤 Panel + Q&A</span>
+            </div>
+            <div class="mt-4 flex gap-3">
+              <a href="#" class="px-4 py-2 rounded-lg bg-brand text-white hover:bg-brand-dark" data-open="d4">Read more</a>
+              <a href="#" class="px-4 py-2 rounded-lg border border-gray-200">Reserve</a>
+            </div>
+            <div id="d4" class="drawer mt-4">
+              <p class="text-sm text-gray-700">In partnership with local services. Practical bystander tips and resource table.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card p-0 overflow-hidden reveal event-item" data-tags="celebrations">
+          <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1600&auto=format&fit=crop" class="w-full h-44 object-cover" alt="Celebrations">
+          <div class="p-5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold text-darkblue">Multifaith Dinner – Celebrate Together</h3>
+              <span class="tag-paid chip">Ticketed</span>
+            </div>
+            <p class="mt-2 text-gray-700">Speakers, performances and a shared meal that brings Wyndham together.</p>
+            <div class="mt-3 flex flex-wrap gap-2 text-sm">
+              <span class="chip">📍 Werribee</span>
+              <span class="chip">🗓️ Sat 15 Nov • 6:30 PM</span>
+              <span class="chip">🎟️ Limited tickets</span>
+            </div>
+            <div class="mt-4 flex gap-3">
+              <a href="#" class="px-4 py-2 rounded-lg bg-brand text-white hover:bg-brand-dark" data-open="d5">Read more</a>
+              <a href="#" class="px-4 py-2 rounded-lg border border-gray-200">Get tickets</a>
+            </div>
+            <div id="d5" class="drawer mt-4">
+              <p class="text-sm text-gray-700">Smart casual. Vegetarian options available. If you’d like to sponsor a table, contact us.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENT TYPES / HOW IT WORKS -->
+  <section class="section bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal text-center">
+        <span class="pill">New here?</span>
+        <h2 class="mt-2 text-3xl md:text-4xl font-bold text-darkblue">What to expect at our events</h2>
+      </div>
+      <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <article class="card p-6 reveal">
+          <h3 class="font-semibold text-darkblue">Interfaith Visits</h3>
+          <p class="mt-2 text-gray-700">Short orientation, respectful guidelines, guided tour, open Q&A, and often a shared meal.</p>
+        </article>
+        <article class="card p-6 reveal">
+          <h3 class="font-semibold text-darkblue">Wellbeing Sessions</h3>
+          <p class="mt-2 text-gray-700">Tea, music and mental health tools in a safe space; led by trusted local practitioners.</p>
+        </article>
+        <article class="card p-6 reveal">
+          <h3 class="font-semibold text-darkblue">Equality Forums</h3>
+          <p class="mt-2 text-gray-700">Panels and campaigns focusing on safety and respect; practical bystander actions.</p>
+        </article>
+        <article class="card p-6 reveal">
+          <h3 class="font-semibold text-darkblue">Environment Days</h3>
+          <p class="mt-2 text-gray-700">Hands-on family activities like tree planting and local eco-care; gloves provided.</p>
+        </article>
+        <article class="card p-6 reveal">
+          <h3 class="font-semibold text-darkblue">Celebrations</h3>
+          <p class="mt-2 text-gray-700">Joyful evenings with music, stories and food from many traditions; some ticketed.</p>
+        </article>
+        <article class="card p-6 reveal">
+          <h3 class="font-semibold text-darkblue">Schools & Libraries</h3>
+          <p class="mt-2 text-gray-700">Talks and interactive activities that build empathy with young people.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAST EVENTS / HIGHLIGHTS -->
+  <section id="past" class="section py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-darkblue">Past Highlights</h2>
+        <p class="mt-2 text-gray-700">A snapshot of what we’ve achieved together recently.</p>
+      </div>
+
+      <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <article class="card overflow-hidden reveal">
+          <img src="https://images.unsplash.com/photo-1520974735194-2f0d4f7f7755?q=80&w=1600&auto=format&fit=crop" class="w-full h-40 object-cover" alt="Festival">
+          <div class="p-5">
+            <h3 class="text-lg font-semibold text-darkblue">Diwali & Community Dinner</h3>
+            <p class="mt-1 text-gray-700">Sold-out celebration with performances and a shared meal.</p>
+            <div class="mt-3 flex flex-wrap gap-2 text-sm">
+              <span class="chip">👥 <span class="counter" data-count="320">0</span> attendees</span>
+              <span class="chip">🤝 12 partners</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card overflow-hidden reveal">
+          <img src="https://images.unsplash.com/photo-1532635249-1117a7f7b19e?q=80&w=1600&auto=format&fit=crop" class="w-full h-40 object-cover" alt="Visit">
+          <div class="p-5">
+            <h3 class="text-lg font-semibold text-darkblue">Gurudwara Visit & Langar</h3>
+            <p class="mt-1 text-gray-700">Warm welcome and insightful Q&A with the Sikh community.</p>
+            <div class="mt-3 flex flex-wrap gap-2 text-sm">
+              <span class="chip">👥 <span class="counter" data-count="95">0</span> attendees</span>
+              <span class="chip">⭐ 4.8/5 feedback</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card overflow-hidden reveal">
+          <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1600&auto=format&fit=crop" class="w-full h-40 object-cover" alt="Tree day">
+          <div class="p-5">
+            <h3 class="text-lg font-semibold text-darkblue">National Tree Day</h3>
+            <p class="mt-1 text-gray-700">Families planted 1000+ seedlings and learned local eco-care.</p>
+            <div class="mt-3 flex flex-wrap gap-2 text-sm">
+              <span class="chip">🌱 <span class="counter" data-count="1020">0</span> seedlings</span>
+              <span class="chip">👨‍👩‍👧‍👦 150 volunteers</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS STRIP -->
+  <section class="section bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal text-center">
+        <span class="pill">With thanks to</span>
+        <h3 class="mt-2 text-2xl md:text-3xl font-bold text-darkblue">Event Partners</h3>
+      </div>
+      <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+        <div class="logo-tile reveal">Wyndham City</div>
+        <div class="logo-tile reveal">Faith Councils</div>
+        <div class="logo-tile reveal">Women’s Health West</div>
+        <div class="logo-tile reveal">Community Services</div>
+        <div class="logo-tile reveal">Local Schools</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section bg-gradient-to-br from-darkblue to-brand text-white py-16">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+      <div class="reveal">
+        <h2 class="text-3xl md:text-4xl font-bold">Want to host or sponsor?</h2>
+        <p class="mt-2 text-white/90">We love partnering with schools, faith centres, services and local businesses.</p>
+      </div>
+      <div class="reveal flex md:justify-end gap-3">
+        <a href="contact.html#join" class="px-6 py-3 rounded-xl bg-white text-darkblue font-semibold shadow hover:scale-105 transition">Partner with us</a>
+        <a href="contact.html" class="px-6 py-3 rounded-xl bg-white/15 ring-1 ring-white/30 text-white hover:bg-white/20">Ask a question</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+      <div class="reveal">
+        <img src="images/win-logo.png" alt="WIN Logo" class="h-14 mb-4" />
+        <p class="text-sm text-gray-300">Building respect, harmony, wellbeing and celebration across Wyndham.</p>
+      </div>
+      <div class="reveal">
+        <h3 class="font-semibold mb-3">Quick Links</h3>
+        <ul class="space-y-2 text-sm text-gray-300">
+            <li><a href="Home.html" class="hover:text-white">Home</a></li>
+          <li><a href="about.html" class="hover:text-white">About</a></li>
+          <li><a href="agenda.html" class="hover:text-white">Agenda</a></li>
+          <li><a href="event.html" class="text-white">Events</a></li>
+          <li><a href="gallery.html" class="hover:text-white">Gallery</a></li>
+          <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <h3 class="font-semibold mb-3">Stay Connected</h3>
+        <p class="text-sm text-gray-300 mb-3">info@wyndhaminterfaith.org</p>
+        <div class="flex gap-4 text-xl">
+          <a href="#" class="hover:text-gold" aria-label="Website">🌐</a>
+          <a href="#" class="hover:text-gold" aria-label="Facebook">📘</a>
+          <a href="#" class="hover:text-gold" aria-label="Instagram">📸</a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-xs text-gray-400 mt-8">© <span id="year"></span> Wyndham Interfaith Network</div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Year + mobile menu
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('menu-btn').onclick = () =>
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+
+    // Reveal on scroll
+    const revealEls=[...document.querySelectorAll('.reveal')];
+    const IO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');IO.unobserve(e.target);}})},{threshold:.25});
+    revealEls.forEach(el=>IO.observe(el));
+
+    // Counters 0 -> target
+    function animateCounter(el, target, duration=1500){
+      const t0=performance.now();
+      function step(now){const p=Math.min((now-t0)/duration,1);el.textContent=Math.floor(p*target).toLocaleString(); if(p<1)requestAnimationFrame(step);}
+      requestAnimationFrame(step);
+    }
+    const counters=document.querySelectorAll('.counter');
+    const counterIO=new IntersectionObserver(ents=>{
+      ents.forEach(ent=>{
+        if(ent.isIntersecting){
+          const el=ent.target, val=parseInt(el.dataset.count,10)||0;
+          animateCounter(el,val); counterIO.unobserve(el);
+        }
+      });
+    },{threshold:.6});
+    counters.forEach(c=>counterIO.observe(c));
+
+    // Filters
+    const buttons=[...document.querySelectorAll('.filter-btn')];
+    const items=[...document.querySelectorAll('.event-item')];
+    buttons.forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        buttons.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const tag=btn.dataset.filter;
+        items.forEach(card=>{
+          const include = tag==='all' || (card.dataset.tags||'').includes(tag);
+          card.style.display = include ? '' : 'none';
+        });
+      });
+    });
+
+    // Drawers (read more)
+    document.querySelectorAll('[data-open]').forEach(a=>{
+      a.addEventListener('click',(e)=>{
+        e.preventDefault();
+        const id=a.getAttribute('data-open');
+        const el=document.getElementById(id);
+        el.classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>

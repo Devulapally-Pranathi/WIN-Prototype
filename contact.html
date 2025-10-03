@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact & Join – Wyndham Interfaith Network</title>
+  <meta name="description" content="Join the Wyndham Interfaith Network, volunteer at events, or partner with us. Get in touch — we’d love to hear from you." />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT:'#2e7d32', dark:'#1b5e20', light:'#7fbf6d' },
+            darkblue:'#2b2e73', gold:'#f5d66d'
+          },
+          boxShadow: {
+            glow:'0 10px 30px rgba(46,125,50,.25)', mega:'0 20px 60px rgba(0,0,0,.25)'
+          },
+          keyframes:{
+            slideUp:{from:{opacity:0,transform:'translateY(40px)'},to:{opacity:1,transform:'translateY(0)'}},
+            float:{'0%,100%':{transform:'translateY(0)'},'50%':{transform:'translateY(-6px)'}},
+            toast:{'0%':{transform:'translateY(20px)',opacity:0},'20%':{transform:'translateY(0)',opacity:1},'80%':{transform:'translateY(0)',opacity:1},'100%':{transform:'translateY(20px)',opacity:0}}
+          },
+          animation:{
+            slideUp:'slideUp 1s ease both',
+            float:'float 6s ease-in-out infinite',
+            toast:'toast 3.5s ease-in-out forwards'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body{font-family:'Open Sans',system-ui,sans-serif}
+    h1,h2,h3,h4{font-family:'Playfair Display',serif}
+    .section{position:relative}
+    .section::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,rgba(46,125,50,.12),rgba(43,46,115,.12))}
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.in{opacity:1;transform:none}
+    .pill{display:inline-flex;align-items:center;gap:.5rem;background:#eef7f0;border:1px solid #d7eadc;color:#1b5e20;padding:.35rem .75rem;border-radius:9999px;font-weight:600}
+    .card{border:1px solid #eef0f4;border-radius:16px;background:#fff;transition:transform .25s ease, box-shadow .25s ease}
+    .card:hover{transform:translateY(-4px);box-shadow:0 18px 36px rgba(0,0,0,.08)}
+    .tab{padding:.6rem 1rem;border-radius:9999px;border:1px solid #e5e7eb;background:#fff;cursor:pointer}
+    .tab.active{background:#eef7f0;border-color:#cfead4;color:#1b5e20}
+    .input{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:.75rem .9rem}
+    .input:focus{outline:none;border-color:#2e7d32;box-shadow:0 0 0 3px rgba(46,125,50,.15)}
+    .err{border-color:#ef4444 !important; box-shadow:0 0 0 3px rgba(239,68,68,.12) !important}
+    .hidden-important{display:none !important}
+  </style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+  <!-- NAVBAR -->
+  <header class="fixed top-0 inset-x-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo.jpg" alt="Wyndham Interfaith Network" class="h-12 w-auto" />
+        <span class="font-semibold text-darkblue">Wyndham Interfaith Network</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 font-medium">
+        <a href="Home.html" class="hover:text-brand">Home</a>
+        <a href="about.html" class="hover:text-brand">About</a>
+        <a href="agenda.html" class="hover:text-brand">Agenda</a>
+        <a href="event.html" class="hover:text-brand">Events</a>
+        <a href="gallery.html" class="hover:text-brand">Gallery</a>
+        <a href="contact.html" class="text-brand">Contact</a>
+        <a href="#join" class="ml-2 px-4 py-2 rounded-full bg-brand text-white shadow-glow hover:bg-brand-dark transition">Join Us</a>
+      </nav>
+      <button id="menu-btn" class="md:hidden p-2 text-darkblue" aria-label="Open menu">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg border-t border-gray-200">
+      <nav class="px-6 py-4 flex flex-col space-y-4 font-medium">
+        <a href="Home.html">Home</a><a href="about.html">About</a><a href="agenda.html">Agenda</a>
+        <a href="event.html">Events</a><a href="gallery.html">Gallery</a><a href="contact.html" class="text-brand">Contact</a>
+        <a href="#join" class="px-4 py-2 rounded-full bg-brand text-white text-center">Join Us</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="section mt-16 relative overflow-hidden">
+    <div class="relative max-w-7xl mx-auto px-6 py-16 md:py-20 grid md:grid-cols-2 gap-10 items-center">
+      <div class="reveal">
+        <span class="pill">Contact & Join</span>
+        <h1 class="mt-3 text-4xl md:text-5xl font-bold text-darkblue">Let’s build a welcoming Wyndham</h1>
+        <p class="mt-3 text-lg text-gray-700">Become a member, volunteer at events, or partner with us. We’ll get back to you quickly.</p>
+        <div class="mt-6 flex gap-3">
+          <a href="#forms" class="px-5 py-3 rounded-xl bg-brand text-white shadow-glow hover:bg-brand-dark transition">Start here</a>
+          <a href="#details" class="px-5 py-3 rounded-xl border border-darkblue/20 text-darkblue hover:bg-darkblue hover:text-white transition">Contact details</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1800&auto=format&fit=crop"
+             alt="Community connections" class="rounded-2xl shadow-xl w-full h-[360px] object-cover animate-float">
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMS: TABS -->
+  <section id="forms" class="section bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal text-center">
+        <span class="pill">Start a conversation</span>
+        <h2 class="mt-2 text-3xl md:text-4xl font-bold text-darkblue">Join • Volunteer • Partner</h2>
+      </div>
+
+      <!-- Tabs -->
+      <div class="reveal mt-8 flex flex-wrap items-center justify-center gap-2">
+        <button class="tab active" data-tab="join">Join as Member</button>
+        <button class="tab" data-tab="volunteer">Volunteer</button>
+        <button class="tab" data-tab="partner">Partner Enquiry</button>
+      </div>
+
+      <div class="mt-8 grid lg:grid-cols-3 gap-6">
+        <!-- Left column: explainer -->
+        <aside class="card p-6 reveal">
+          <h3 class="text-xl font-semibold text-darkblue">Why join?</h3>
+          <ul class="mt-2 space-y-2 text-gray-700">
+            <li>• Be first to hear about visits & dinners</li>
+            <li>• Member-only volunteering opportunities</li>
+            <li>• Help shape programs that matter</li>
+          </ul>
+          <div class="mt-4 text-sm text-gray-600">
+            We welcome people of all backgrounds, faiths and none — families, students, elders and everyone in between.
+          </div>
+          <div class="mt-5 grid grid-cols-3 gap-3 text-center">
+            <div class="rounded-xl bg-white p-4 border"><div class="text-2xl font-bold text-darkblue counter" data-count="1500">0</div><div class="text-xs text-gray-600">Participants</div></div>
+            <div class="rounded-xl bg-white p-4 border"><div class="text-2xl font-bold text-darkblue counter" data-count="45">0</div><div class="text-xs text-gray-600">Partners</div></div>
+            <div class="rounded-xl bg-white p-4 border"><div class="text-2xl font-bold text-darkblue counter" data-count="120">0</div><div class="text-xs text-gray-600">Events</div></div>
+          </div>
+        </aside>
+
+        <!-- Forms -->
+        <div class="lg:col-span-2 space-y-6">
+          <!-- JOIN -->
+          <form id="form-join" class="card p-6 reveal">
+            <h3 class="text-xl font-semibold text-darkblue">Join as a Member</h3>
+            <div class="mt-4 grid md:grid-cols-2 gap-4">
+              <div><label class="text-sm text-gray-600">Full Name</label><input required name="name" class="input" placeholder="Your name"></div>
+              <div><label class="text-sm text-gray-600">Email</label><input required type="email" name="email" class="input" placeholder="you@example.com"></div>
+              <div><label class="text-sm text-gray-600">Phone</label><input required name="phone" class="input" placeholder="+61 …"></div>
+              <div><label class="text-sm text-gray-600">Suburb</label><input name="suburb" class="input" placeholder="e.g., Tarneit"></div>
+              <div class="md:col-span-2"><label class="text-sm text-gray-600">Interests</label>
+                <div class="grid sm:grid-cols-2 gap-2 mt-1">
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="interests" value="visits"> Interfaith Visits</label>
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="interests" value="wellbeing"> Wellbeing</label>
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="interests" value="equality"> Equality & Respect</label>
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="interests" value="environment"> Environment</label>
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="interests" value="celebrations"> Celebrations</label>
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="interests" value="schools"> Schools & Libraries</label>
+                </div>
+              </div>
+              <div class="md:col-span-2"><label class="text-sm text-gray-600">Message (optional)</label>
+                <textarea name="message" rows="3" class="input" placeholder="Tell us anything we should know"></textarea>
+              </div>
+            </div>
+            <div class="mt-5 flex items-center justify-between">
+              <label class="flex items-center gap-2 text-sm text-gray-600"><input type="checkbox" required> I agree to be contacted about WIN programs.</label>
+              <button class="px-5 py-2.5 rounded-xl bg-brand text-white shadow-glow hover:bg-brand-dark" type="submit">Join</button>
+            </div>
+          </form>
+
+          <!-- VOLUNTEER -->
+          <form id="form-volunteer" class="card p-6 reveal hidden">
+            <h3 class="text-xl font-semibold text-darkblue">Volunteer</h3>
+            <div class="mt-4 grid md:grid-cols-2 gap-4">
+              <div><label class="text-sm text-gray-600">Full Name</label><input required name="name" class="input" placeholder="Your name"></div>
+              <div><label class="text-sm text-gray-600">Email</label><input required type="email" name="email" class="input" placeholder="you@example.com"></div>
+              <div><label class="text-sm text-gray-600">Phone</label><input name="phone" class="input" placeholder="+61 …"></div>
+              <div><label class="text-sm text-gray-600">Availability</label>
+                <select name="availability" class="input"><option>Weekends</option><option>Weeknights</option><option>Flexible</option></select>
+              </div>
+              <div class="md:col-span-2"><label class="text-sm text-gray-600">Areas to help</label>
+                <div class="grid sm:grid-cols-2 gap-2 mt-1">
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox" value="event-host"> Event hosting</label>
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox" value="welcome-team"> Welcome team</label>
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox" value="media"> Photo/Media</label>
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox" value="environment"> Environment Day</label>
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox" value="schools"> Schools / Youth</label>
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox" value="sponsorship"> Sponsorship</label>
+                </div>
+              </div>
+              <div class="md:col-span-2"><label class="text-sm text-gray-600">Notes</label>
+                <textarea name="message" rows="3" class="input" placeholder="Tell us about your interests/skills"></textarea>
+              </div>
+            </div>
+            <div class="mt-5 flex items-center justify-end">
+              <button class="px-5 py-2.5 rounded-xl bg-brand text-white shadow-glow hover:bg-brand-dark" type="submit">Register as Volunteer</button>
+            </div>
+          </form>
+
+          <!-- PARTNER -->
+          <form id="form-partner" class="card p-6 reveal hidden">
+            <h3 class="text-xl font-semibold text-darkblue">Partner Enquiry</h3>
+            <div class="mt-4 grid md:grid-cols-2 gap-4">
+              <div><label class="text-sm text-gray-600">Organisation</label><input required name="org" class="input" placeholder="Organisation name"></div>
+              <div><label class="text-sm text-gray-600">Contact Name</label><input required name="name" class="input" placeholder="Your name"></div>
+              <div><label class="text-sm text-gray-600">Email</label><input required type="email" name="email" class="input" placeholder="you@org.org"></div>
+              <div><label class="text-sm text-gray-600">Phone</label><input name="phone" class="input" placeholder="+61 …"></div>
+              <div class="md:col-span-2">
+                <label class="text-sm text-gray-600">How can we collaborate?</label>
+                <select name="interest" class="input">
+                  <option>Host an interfaith visit</option><option>Co-run a wellbeing session</option>
+                  <option>Equality forum partnership</option><option>Environment/Tree Day</option>
+                  <option>Multifaith Dinner sponsorship</option><option>Schools & Libraries engagement</option>
+                </select>
+              </div>
+              <div class="md:col-span-2"><label class="text-sm text-gray-600">Message</label>
+                <textarea name="message" rows="3" class="input" placeholder="Tell us about your idea"></textarea>
+              </div>
+            </div>
+            <div class="mt-5 flex items-center justify-end">
+              <button class="px-5 py-2.5 rounded-xl bg-brand text-white shadow-glow hover:bg-brand-dark" type="submit">Send enquiry</button>
+            </div>
+          </form>
+
+          <!-- Toast -->
+          <div id="toast" class="hidden fixed bottom-5 right-5 z-50">
+            <div class="rounded-xl bg-darkblue text-white shadow-mega px-4 py-3 animate-toast">
+              <strong class="block">Thanks! 🎉</strong>
+              <span class="text-sm text-white/90">We’ve received your message and will reply soon.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT DETAILS + MAP -->
+  <section id="details" class="section py-16">
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-8 items-start">
+      <div class="card p-6 reveal">
+        <h3 class="text-xl font-semibold text-darkblue">Contact details</h3>
+        <ul class="mt-3 space-y-2 text-gray-700">
+          <li>📧 <a href="mailto:info@wyndhaminterfaith.org" class="text-brand underline">info@wyndhaminterfaith.org</a></li>
+          <li>📞 <a href="tel:+61000000000" class="text-brand underline">+61 000 000 000</a></li>
+          <li>📍 Wyndham, Victoria</li>
+        </ul>
+        <div class="mt-6 h-56 w-full overflow-hidden rounded-xl border">
+          <!-- Map image placeholder (royalty-free) -->
+          <img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?q=80&w=1600&auto=format&fit=crop"
+               alt="Map preview" class="w-full h-full object-cover">
+        </div>
+        <p class="mt-3 text-sm text-gray-600">We meet across the city — at faith centres, schools, libraries and parks.</p>
+      </div>
+
+      <!-- FAQ -->
+      <div class="space-y-6">
+        <div class="card p-6 reveal">
+          <h3 class="text-xl font-semibold text-darkblue">FAQ</h3>
+          <div class="mt-3 space-y-3">
+            <details class="border rounded-lg p-3">
+              <summary class="font-semibold text-darkblue cursor-pointer">Are events free?</summary>
+              <p class="mt-2 text-gray-700">Most are free (visits, wellbeing, equality forums). Some special celebrations are ticketed to cover costs.</p>
+            </details>
+            <details class="border rounded-lg p-3">
+              <summary class="font-semibold text-darkblue cursor-pointer">Can I bring my family?</summary>
+              <p class="mt-2 text-gray-700">Yes! Many events are family-friendly. We’ll specify any age guidance on each event.</p>
+            </details>
+            <details class="border rounded-lg p-3">
+              <summary class="font-semibold text-darkblue cursor-pointer">How soon will you reply?</summary>
+              <p class="mt-2 text-gray-700">We aim to respond within 2–3 business days.</p>
+            </details>
+          </div>
+        </div>
+        <div class="card p-6 reveal">
+          <h3 class="text-xl font-semibold text-darkblue">Privacy</h3>
+          <p class="mt-2 text-gray-700">We only use your details to respond to your enquiry and share WIN updates you’ve asked for. You can opt out anytime.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="join" class="section bg-gradient-to-br from-darkblue to-brand text-white py-16">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+      <div class="reveal">
+        <h2 class="text-3xl md:text-4xl font-bold">Ready to join or collaborate?</h2>
+        <p class="mt-2 text-white/90">There’s a place for you — individual, family, school, service or faith community.</p>
+      </div>
+      <div class="reveal flex md:justify-end gap-3">
+        <a href="#forms" class="px-6 py-3 rounded-xl bg-white text-darkblue font-semibold shadow hover:scale-105 transition">Start form</a>
+        <a href="events.html" class="px-6 py-3 rounded-xl bg-white/15 ring-1 ring-white/30 text-white hover:bg-white/20">See events</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+      <div class="reveal">
+        <img src="images/win-logo.png" alt="WIN Logo" class="h-14 mb-4" />
+        <p class="text-sm text-gray-300">Building respect, harmony, wellbeing and celebration across Wyndham.</p>
+      </div>
+      <div class="reveal">
+        <h3 class="font-semibold mb-3">Quick Links</h3>
+        <ul class="space-y-2 text-sm text-gray-300">
+          <li><a href="about.html" class="hover:text-white">About</a></li>
+          <li><a href="agenda.html" class="hover:text-white">Agenda</a></li>
+          <li><a href="events.html" class="hover:text-white">Events</a></li>
+          <li><a href="gallery.html" class="hover:text-white">Gallery</a></li>
+          <li><a href="contact.html" class="text-white">Contact</a></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <h3 class="font-semibold mb-3">Stay Connected</h3>
+        <p class="text-sm text-gray-300 mb-3">info@wyndhaminterfaith.org</p>
+        <div class="flex gap-4 text-xl">
+          <a href="#" class="hover:text-gold" aria-label="Website">🌐</a>
+          <a href="#" class="hover:text-gold" aria-label="Facebook">📘</a>
+          <a href="#" class="hover:text-gold" aria-label="Instagram">📸</a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-xs text-gray-400 mt-8">© <span id="year"></span> Wyndham Interfaith Network</div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Year + mobile menu
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('menu-btn').onclick = () =>
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+
+    // Reveal on scroll
+    const revealEls=[...document.querySelectorAll('.reveal')];
+    const IO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');IO.unobserve(e.target);}})},{threshold:.25});
+    revealEls.forEach(el=>IO.observe(el));
+
+    // Counters 0 -> target
+    function animateCounter(el, target, duration=1500){
+      const t0=performance.now();
+      function step(now){const p=Math.min((now-t0)/duration,1);el.textContent=Math.floor(p*target).toLocaleString(); if(p<1)requestAnimationFrame(step);}
+      requestAnimationFrame(step);
+    }
+    const counters=document.querySelectorAll('.counter');
+    const counterIO=new IntersectionObserver(ents=>{
+      ents.forEach(ent=>{
+        if(ent.isIntersecting){
+          const el=ent.target, val=parseInt(el.dataset.count,10)||0;
+          animateCounter(el,val); counterIO.unobserve(el);
+        }
+      });
+    },{threshold:.6});
+    counters.forEach(c=>counterIO.observe(c));
+
+    // Tabs
+    const tabs=[...document.querySelectorAll('.tab')];
+    const forms={
+      join: document.getElementById('form-join'),
+      volunteer: document.getElementById('form-volunteer'),
+      partner: document.getElementById('form-partner')
+    };
+    tabs.forEach(t=>{
+      t.addEventListener('click',()=>{
+        tabs.forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+        const key=t.dataset.tab;
+        Object.entries(forms).forEach(([k,el])=>{
+          el.classList.toggle('hidden', k!==key);
+        });
+      });
+    });
+
+    // Simple validation + toast
+    const toast=document.getElementById('toast');
+    function showToast(){
+      toast.classList.remove('hidden'); // animation defined via tailwind keyframes
+      setTimeout(()=>toast.classList.add('hidden'), 3600);
+    }
+    function handleSubmit(e){
+      e.preventDefault();
+      const form=e.target;
+      // basic validate required + email
+      let ok=true;
+      form.querySelectorAll('[required]').forEach(inp=>{
+        if(!inp.value.trim()){ inp.classList.add('err'); ok=false; }
+        else inp.classList.remove('err');
+      });
+      const email=form.querySelector('input[type="email"]');
+      if(email && !/^\S+@\S+\.\S+$/.test(email.value)){ email.classList.add('err'); ok=false; }
+      if(!ok) return;
+      // emulate success
+      form.reset();
+      showToast();
+    }
+    Object.values(forms).forEach(f=>f.addEventListener('submit',handleSubmit));
+  </script>
+</body>
+</html>

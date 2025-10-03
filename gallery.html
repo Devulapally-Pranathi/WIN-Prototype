@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery – Wyndham Interfaith Network</title>
+  <meta name="description" content="Moments from WIN: interfaith visits, wellbeing nights, equality forums, Tree Day, celebrations, and school programs." />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT:'#2e7d32', dark:'#1b5e20', light:'#7fbf6d' },
+            darkblue:'#2b2e73', gold:'#f5d66d'
+          },
+          boxShadow: {
+            glow:'0 10px 30px rgba(46,125,50,.25)', mega:'0 20px 60px rgba(0,0,0,.25)'
+          },
+          keyframes:{
+            slideUp:{from:{opacity:0,transform:'translateY(40px)'},to:{opacity:1,transform:'translateY(0)'}}
+          },
+          animation:{ slideUp:'slideUp 1s ease both' }
+        }
+      }
+    }
+  </script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body{font-family:'Open Sans',system-ui,sans-serif}
+    h1,h2,h3,h4{font-family:'Playfair Display',serif}
+
+    .section{position:relative}
+    .section::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,rgba(46,125,50,.12),rgba(43,46,115,.12))}
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.in{opacity:1;transform:none}
+
+    /* Masonry (pure CSS) */
+    .masonry{column-gap:1rem}
+    @media (min-width:640px){ .masonry{column-count:2} }
+    @media (min-width:1024px){ .masonry{column-count:3} }
+    @media (min-width:1280px){ .masonry{column-count:4} }
+
+    .tile{break-inside:avoid; -webkit-column-break-inside:avoid; margin-bottom:1rem}
+    .tile-inner{border:1px solid #eef0f4;border-radius:16px;overflow:hidden;background:#fff;transition:transform .25s ease, box-shadow .25s ease}
+    .tile-inner:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(0,0,0,.12)}
+    .tile img{width:100%;height:auto;display:block}
+
+    .chip{font-size:.68rem;padding:.2rem .5rem;border-radius:9999px;border:1px solid #e5e7eb;background:#f8fafc}
+    .chip.visits{background:#e8f6ea;border-color:#cfead4;color:#1b5e20}
+    .chip.wellbeing{background:#eef4ff;border-color:#dbe6ff;color:#1e3a8a}
+    .chip.equality{background:#fff7e6;border-color:#ffe2a8;color:#8a5a00}
+    .chip.environment{background:#eafaf1;border-color:#c8edd8;color:#166534}
+    .chip.celebrations{background:#fff0f3;border-color:#ffd6de;color:#9f1239}
+    .chip.schools{background:#f0f9ff;border-color:#d5efff;color:#075985}
+
+    /* Lightbox */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:60}
+    .lightbox.open{display:flex}
+    .lb-frame{max-width:min(92vw,1200px);max-height:88vh;background:#0b1220;border-radius:16px;overflow:hidden;box-shadow:0 25px 80px rgba(0,0,0,.5)}
+    .lb-img{max-height:72vh;width:100%;object-fit:contain;background:#000}
+    .lb-head{display:flex;align-items:center;justify-content:space-between;color:#fff;padding:.75rem 1rem}
+    .lb-title{font-weight:600}
+    .lb-caption{color:#cbd5e1;font-size:.9rem}
+    .lb-actions button{color:#fff;padding:.4rem .7rem;border-radius:.5rem;background:rgba(255,255,255,.12)}
+    .lb-actions button:hover{background:rgba(255,255,255,.18)}
+    .lb-footer{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;color:#cbd5e1;background:#0f172a}
+  </style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+  <!-- NAVBAR -->
+  <header class="fixed top-0 inset-x-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo.jpg" alt="Wyndham Interfaith Network" class="h-12 w-auto" />
+        <span class="font-semibold text-darkblue">Wyndham Interfaith Network</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 font-medium">
+        <a href="Home.html" class="hover:text-brand">Home</a>
+        <a href="about.html" class="hover:text-brand">About</a>
+        <a href="agenda.html" class="hover:text-brand">Agenda</a>
+        <a href="event.html" class="hover:text-brand">Events</a>
+        <a href="gallery.html" class="text-brand">Gallery</a>
+        <a href="contact.html" class="hover:text-brand">Contact</a>
+        <a href="contact.html#join" class="ml-2 px-4 py-2 rounded-full bg-brand text-white shadow-glow hover:bg-brand-dark transition">Join Us</a>
+      </nav>
+      <button id="menu-btn" class="md:hidden p-2 text-darkblue" aria-label="Open menu">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg border-t border-gray-200">
+      <nav class="px-6 py-4 flex flex-col space-y-4 font-medium">
+        <a href="Home.html">Home</a><a href="about.html">About</a><a href="agenda.html">Agenda</a>
+        <a href="event.html">Events</a><a href="gallery.html" class="text-brand">Gallery</a><a href="contact.html">Contact</a>
+        <a href="contact.html#join" class="px-4 py-2 rounded-full bg-brand text-white text-center">Join Us</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="section mt-16 relative overflow-hidden">
+    <div class="relative max-w-7xl mx-auto px-6 py-16 md:py-20 text-center">
+      <span class="reveal inline-flex items-center justify-center px-3 py-1 rounded-full text-sm bg-[#eef7f0] border border-[#d7eadc] text-[#1b5e20]">Gallery</span>
+      <h1 class="reveal mt-3 text-4xl md:text-5xl font-bold text-darkblue">Moments of unity & celebration</h1>
+      <p class="reveal mt-3 text-lg text-gray-700 max-w-3xl mx-auto">A peek into our visits, wellbeing sessions, equality forums, environment days and multifaith celebrations across Wyndham.</p>
+      <div class="reveal mt-6 flex flex-wrap items-center justify-center gap-2">
+        <button class="filter-btn active px-4 py-2 rounded-full border border-gray-200" data-filter="all">All</button>
+        <button class="filter-btn px-4 py-2 rounded-full border border-gray-200" data-filter="visits">Visits</button>
+        <button class="filter-btn px-4 py-2 rounded-full border border-gray-200" data-filter="wellbeing">Wellbeing</button>
+        <button class="filter-btn px-4 py-2 rounded-full border border-gray-200" data-filter="equality">Equality</button>
+        <button class="filter-btn px-4 py-2 rounded-full border border-gray-200" data-filter="environment">Environment</button>
+        <button class="filter-btn px-4 py-2 rounded-full border border-gray-200" data-filter="celebrations">Celebrations</button>
+        <button class="filter-btn px-4 py-2 rounded-full border border-gray-200" data-filter="schools">Schools</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MASONRY GRID -->
+  <section class="section py-6">
+    <div class="max-w-7xl mx-auto px-6">
+      <div id="masonry" class="masonry">
+        <!-- Tile template:
+        <figure class="tile reveal" data-tags="visits">
+          <div class="tile-inner">
+            <img src="…" alt="…" loading="lazy">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Title</h3>
+                <span class="chip visits">Visits</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+        -->
+
+        <!-- VISITS -->
+        <figure class="tile reveal" data-tags="visits">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=1600&auto=format&fit=crop" alt="Gurudwara welcome" loading="lazy" data-full="https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Gurudwara Visit & Langar</h3>
+                <span class="chip visits">Visits</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <figure class="tile reveal" data-tags="visits">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1600&auto=format&fit=crop" alt="Community dinner table" loading="lazy" data-full="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Shared Meal After Visit</h3>
+                <span class="chip visits">Visits</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <!-- WELLBEING -->
+        <figure class="tile reveal" data-tags="wellbeing">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1604881991720-4c52a2b01f59?q=80&w=1600&auto=format&fit=crop" alt="Tea & music night" loading="lazy" data-full="https://images.unsplash.com/photo-1604881991720-4c52a2b01f59?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Wellbeing: Music & Mind</h3>
+                <span class="chip wellbeing">Wellbeing</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <figure class="tile reveal" data-tags="wellbeing">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?q=80&w=1600&auto=format&fit=crop" alt="Mindful connections" loading="lazy" data-full="https://images.unsplash.com/photo-1511988617509-a57c8a288659?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Mindful Connections</h3>
+                <span class="chip wellbeing">Wellbeing</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <!-- EQUALITY -->
+        <figure class="tile reveal" data-tags="equality">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1600&auto=format&fit=crop" alt="Equality panel" loading="lazy" data-full="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Equality & Respect Forum</h3>
+                <span class="chip equality">Equality</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <figure class="tile reveal" data-tags="equality">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1520974735194-2f0d4f7f7755?q=80&w=1600&auto=format&fit=crop" alt="Community voices" loading="lazy" data-full="https://images.unsplash.com/photo-1520974735194-2f0d4f7f7755?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Community Voices</h3>
+                <span class="chip equality">Equality</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <!-- ENVIRONMENT -->
+        <figure class="tile reveal" data-tags="environment">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1600&auto=format&fit=crop" alt="Tree planting day" loading="lazy" data-full="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Tree Day: Planting Together</h3>
+                <span class="chip environment">Environment</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <figure class="tile reveal" data-tags="environment">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=1600&auto=format&fit=crop" alt="Park cleanup" loading="lazy" data-full="https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Park Cleanup & BBQ</h3>
+                <span class="chip environment">Environment</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <!-- CELEBRATIONS -->
+        <figure class="tile reveal" data-tags="celebrations">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1600&auto=format&fit=crop" alt="Festival lights" loading="lazy" data-full="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Festival of Lights</h3>
+                <span class="chip celebrations">Celebrations</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <figure class="tile reveal" data-tags="celebrations">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1543352634-4f8cde4ef1c4?q=80&w=1600&auto=format&fit=crop" alt="Community feast" loading="lazy" data-full="https://images.unsplash.com/photo-1543352634-4f8cde4ef1c4?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Community Feast</h3>
+                <span class="chip celebrations">Celebrations</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <!-- SCHOOLS -->
+        <figure class="tile reveal" data-tags="schools">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1523246191915-6c2d3f2d5a56?q=80&w=1600&auto=format&fit=crop" alt="School workshop" loading="lazy" data-full="https://images.unsplash.com/photo-1523246191915-6c2d3f2d5a56?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Schools Workshop</h3>
+                <span class="chip schools">Schools</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <figure class="tile reveal" data-tags="schools">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1520974735194-2f0d4f7f7755?q=80&w=1600&auto=format&fit=crop" alt="Library talk" loading="lazy" data-full="https://images.unsplash.com/photo-1520974735194-2f0d4f7f7755?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Library Talk</h3>
+                <span class="chip schools">Schools</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <!-- Extras to enrich grid -->
+        <figure class="tile reveal" data-tags="visits">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1532635249-1117a7f7b19e?q=80&w=1600&auto=format&fit=crop" alt="Circle of friends" loading="lazy" data-full="https://images.unsplash.com/photo-1532635249-1117a7f7b19e?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Circle of Friends</h3>
+                <span class="chip visits">Visits</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <figure class="tile reveal" data-tags="environment">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1600&auto=format&fit=crop" alt="Native planting" loading="lazy" data-full="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Native Planting</h3>
+                <span class="chip environment">Environment</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <figure class="tile reveal" data-tags="celebrations">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?q=80&w=1600&auto=format&fit=crop" alt="Cultural dance" loading="lazy" data-full="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Cultural Dance</h3>
+                <span class="chip celebrations">Celebrations</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <figure class="tile reveal" data-tags="wellbeing">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1532634896-26909d0d4b6a?q=80&w=1600&auto=format&fit=crop" alt="Open mic wellbeing" loading="lazy" data-full="https://images.unsplash.com/photo-1532634896-26909d0d4b6a?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Open Mic & Tea</h3>
+                <span class="chip wellbeing">Wellbeing</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+        <figure class="tile reveal" data-tags="equality">
+          <div class="tile-inner">
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1600&auto=format&fit=crop" alt="Respect training" loading="lazy" data-full="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=2400&auto=format&fit=crop">
+            <figcaption class="p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-darkblue text-sm">Respect Training</h3>
+                <span class="chip equality">Equality</span>
+              </div>
+            </figcaption>
+          </div>
+        </figure>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section bg-gradient-to-br from-darkblue to-brand text-white py-16">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+      <div class="reveal">
+        <h2 class="text-3xl md:text-4xl font-bold">Have photos to share?</h2>
+        <p class="mt-2 text-white/90">Send us your favourite moments — we’ll feature community shots in this gallery.</p>
+      </div>
+      <div class="reveal flex md:justify-end gap-3">
+        <a href="contact.html" class="px-6 py-3 rounded-xl bg-white text-darkblue font-semibold shadow hover:scale-105 transition">Submit photos</a>
+        <a href="event.html" class="px-6 py-3 rounded-xl bg-white/15 ring-1 ring-white/30 text-white hover:bg-white/20">See events</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+      <div class="reveal">
+        <img src="images/win-logo.png" alt="WIN Logo" class="h-14 mb-4" />
+        <p class="text-sm text-gray-300">Building respect, harmony, wellbeing and celebration across Wyndham.</p>
+      </div>
+      <div class="reveal">
+        <h3 class="font-semibold mb-3">Quick Links</h3>
+        <ul class="space-y-2 text-sm text-gray-300">
+          <li><a href="Home.html" class="hover:text-white">Home</a></li>
+          <li><a href="about.html" class="hover:text-white">About</a></li>
+          <li><a href="agenda.html" class="hover:text-white">Agenda</a></li>
+          <li><a href="event.html" class="hover:text-white">Events</a></li>
+          <li><a href="gallery.html" class="text-white">Gallery</a></li>
+          <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <h3 class="font-semibold mb-3">Stay Connected</h3>
+        <p class="text-sm text-gray-300 mb-3">info@wyndhaminterfaith.org</p>
+        <div class="flex gap-4 text-xl">
+          <a href="#" class="hover:text-gold" aria-label="Website">🌐</a>
+          <a href="#" class="hover:text-gold" aria-label="Facebook">📘</a>
+          <a href="#" class="hover:text-gold" aria-label="Instagram">📸</a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-xs text-gray-400 mt-8">© <span id="year"></span> Wyndham Interfaith Network</div>
+  </footer>
+
+  <!-- LIGHTBOX MODAL -->
+  <div id="lightbox" class="lightbox" aria-modal="true" role="dialog" aria-hidden="true">
+    <div class="lb-frame w-full">
+      <div class="lb-head">
+        <div>
+          <div id="lb-title" class="lb-title">Title</div>
+          <div id="lb-caption" class="lb-caption">Type</div>
+        </div>
+        <div class="lb-actions">
+          <button id="lb-prev" aria-label="Previous">⟨</button>
+          <button id="lb-next" aria-label="Next">⟩</button>
+          <button id="lb-close" aria-label="Close">✕</button>
+        </div>
+      </div>
+      <img id="lb-img" class="lb-img" alt="">
+      <div class="lb-footer">
+        <span>Tip: use ← → and ESC</span>
+        <a id="lb-download" href="#" download class="underline">Download</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Year + mobile menu
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('menu-btn').onclick = () =>
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+
+    // Reveal on scroll
+    const revealEls=[...document.querySelectorAll('.reveal')];
+    const IO=new IntersectionObserver(es=>{
+      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); IO.unobserve(e.target); }});
+    },{threshold:.25});
+    revealEls.forEach(el=>IO.observe(el));
+
+    // Filters
+    const filterBtns=[...document.querySelectorAll('.filter-btn')];
+    const tiles=[...document.querySelectorAll('.tile')];
+    filterBtns.forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        filterBtns.forEach(b=>b.classList.remove('bg-[#eef7f0]','border-[#d7eadc]','text-[#1b5e20]'));
+        btn.classList.add('bg-[#eef7f0]','border-[#d7eadc]','text-[#1b5e20]');
+        const tag=btn.dataset.filter;
+        tiles.forEach(t=>{
+          const show = tag==='all' || (t.dataset.tags||'').includes(tag);
+          t.style.display = show ? 'inline-block' : 'none';
+        });
+      });
+    });
+
+    // Lightbox
+    const lb=document.getElementById('lightbox');
+    const lbImg=document.getElementById('lb-img');
+    const lbTitle=document.getElementById('lb-title');
+    const lbCaption=document.getElementById('lb-caption');
+    const lbDownload=document.getElementById('lb-download');
+    const order=[...document.querySelectorAll('.tile img')]; // clickable images
+    let idx=-1;
+
+    function openLB(i){
+      idx=i;
+      const img=order[idx];
+      const fig=img.closest('figure');
+      const title=fig.querySelector('h3')?.textContent||'';
+      const tag=fig.querySelector('.chip')?.textContent||'';
+      lbImg.src = img.dataset.full || img.src;
+      lbImg.alt = img.alt || title;
+      lbTitle.textContent = title;
+      lbCaption.textContent = tag;
+      lbDownload.href = lbImg.src;
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden','false');
+    }
+    function closeLB(){
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden','true');
+      lbImg.src='';
+    }
+    function nextLB(dir=1){
+      if(idx<0) return;
+      idx = (idx+dir+order.length)%order.length;
+      openLB(idx);
+    }
+
+    order.forEach((img,i)=>{
+      img.style.cursor='zoom-in';
+      img.addEventListener('click',()=>openLB(i));
+    });
+    document.getElementById('lb-close').onclick=closeLB;
+    document.getElementById('lb-prev').onclick=()=>nextLB(-1);
+    document.getElementById('lb-next').onclick=()=>nextLB(1);
+    lb.addEventListener('click',(e)=>{ if(e.target===lb) closeLB(); });
+    window.addEventListener('keydown',(e)=>{
+      if(!lb.classList.contains('open')) return;
+      if(e.key==='Escape') closeLB();
+      if(e.key==='ArrowRight') nextLB(1);
+      if(e.key==='ArrowLeft') nextLB(-1);
+    });
+  </script>
+</body>
+</html>

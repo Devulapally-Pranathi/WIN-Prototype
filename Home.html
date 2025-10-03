@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wyndham Interfaith Network – Unity in Diversity</title>
+  <meta name="description" content="Wyndham Interfaith Network connects people across faiths through dialogue, celebration, wellbeing, equality and caring for our environment." />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT:'#2e7d32', dark:'#1b5e20', light:'#7fbf6d' },
+            darkblue:'#2b2e73', gold:'#f5d66d'
+          },
+          boxShadow: {
+            glow:'0 10px 30px rgba(46,125,50,.25)', mega:'0 20px 60px rgba(0,0,0,.25)'
+          },
+          keyframes:{
+            zoom:{'0%,100%':{transform:'scale(1.1)'},'50%':{transform:'scale(1)'}},
+            float:{'0%,100%':{transform:'translateY(0)'},'50%':{transform:'translateY(-8px)'}},
+            slideUp:{from:{opacity:0,transform:'translateY(40px)'},to:{opacity:1,transform:'translateY(0)'}}
+          },
+          animation:{
+            zoom:'zoom 15s ease-in-out infinite',
+            float:'float 6s ease-in-out infinite',
+            slideUp:'slideUp 1s ease both'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Typography & base */
+    body{font-family:'Open Sans',system-ui,sans-serif}
+    h1,h2,h3,h4{font-family:'Playfair Display',serif}
+
+    /* Section dividers & reveals */
+    .section{position:relative}
+    .section::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,rgba(46,125,50,.12),rgba(43,46,115,.12))}
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.in{opacity:1;transform:none}
+
+    /* Hero */
+    .hero-chip{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.25)}
+    .typeword{display:none}
+    .typeword.active{display:inline}
+    #caret{display:inline-block;width:2px;height:1.1em;background:#fff;vertical-align:-.2em;margin-left:.25rem;animation:blink .9s steps(1) infinite}
+    @keyframes blink{50%{opacity:0}}
+
+    /* Who we are grid */
+    .who-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .who-card{border-radius:18px;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.12);transform:translateY(12px);opacity:0;transition:opacity .6s ease, transform .6s ease}
+    .who-card.in{opacity:1;transform:none}
+    .who-card:nth-child(2){transition-delay:.12s}
+    .who-card:nth-child(3){transition-delay:.24s}
+
+    /* Agenda */
+    .agenda-pill{display:inline-flex;align-items:center;gap:.5rem;background:#eef7f0;border:1px solid #d7eadc;color:#1b5e20;padding:.4rem .75rem;border-radius:9999px;font-weight:600}
+    .agenda-card{border:1px solid #eef0f4;border-radius:16px;overflow:hidden;background:#fff;transition:transform .25s ease, box-shadow .25s ease}
+    .agenda-card:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(0,0,0,.12)}
+    .agenda-img{height:144px;object-fit:cover}
+
+    /* Testimonials */
+    .test-bg{background:linear-gradient(180deg,#f7faf9 0%, #eef6f0 100%)}
+    .bubble{border:1px solid #e3e9e5;border-radius:18px;background:#fff;box-shadow:0 10px 24px rgba(46,125,50,.12)}
+    .bubble h4{color:#2b2e73}
+  </style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+  <!-- Sticky CTA (mobile) -->
+  <aside class="md:hidden fixed bottom-0 inset-x-0 z-50 bg-darkblue text-white px-4 py-3 flex items-center justify-between shadow-xl">
+    <span class="text-sm">Be part of WIN ✨</span>
+    <a href="contact.html#join" class="px-4 py-2 rounded-full bg-brand text-white font-semibold shadow-glow">Join Us</a>
+  </aside>
+
+  <!-- NAVBAR -->
+  <header class="fixed top-0 inset-x-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/logo.jpg" alt="Wyndham Interfaith Network" class="h-12 w-auto" />
+        <span class="font-semibold text-darkblue">Wyndham Interfaith Network</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 font-medium">
+        <a href="index.html" class="text-brand">Home</a>
+        <a href="about.html" class="hover:text-brand">About</a>
+        <a href="agenda.html" class="hover:text-brand">Agenda</a>
+        <a href="event.html" class="hover:text-brand">Events</a>
+        <a href="gallery.html" class="hover:text-brand">Gallery</a>
+        <a href="contact.html" class="hover:text-brand">Contact</a>
+        <a href="contact.html#join" class="ml-2 px-4 py-2 rounded-full bg-brand text-white shadow-glow hover:bg-brand-dark transition">Join Us</a>
+      </nav>
+      <button id="menu-btn" class="md:hidden p-2 text-darkblue" aria-label="Open menu">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg border-t border-gray-200">
+      <nav class="px-6 py-4 flex flex-col space-y-4 font-medium">
+        <a href="index.html">Home</a><a href="about.html">About</a><a href="agenda.html">Agenda</a>
+        <a href="event.html">Events</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+        <a href="contact.html#join" class="px-4 py-2 rounded-full bg-brand text-white text-center">Join Us</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="section relative h-[92vh] mt-16 overflow-hidden">
+    <!-- Slides -->
+    <div class="absolute inset-0">
+      <img class="slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 animate-zoom"
+           src="images/Gather-Your-Community.jpg" alt="Community dinner" />
+      <img class="slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 animate-zoom"
+           src="images/hero2.jpg" alt="Festival celebration" />
+      <img class="slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 animate-zoom"
+           src="images/hero3.jpg" alt="Interfaith gathering" />
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/35"></div>
+
+    <!-- Content -->
+    <div class="relative z-10 max-w-7xl mx-auto h-full px-6 flex items-center">
+      <div class="grid md:grid-cols-2 gap-10 w-full text-white">
+        <div class="reveal">
+          <span class="inline-flex hero-chip px-3 py-1 rounded-full text-sm">Community-led • Non-profit</span>
+          <h1 class="mt-4 text-5xl md:text-6xl font-bold">Unity in Diversity</h1>
+          <p class="mt-3 text-lg md:text-xl text-white/90 max-w-xl">
+            <span id="twPrefix">We build</span> <span id="twWord" class="font-semibold"></span><span id="caret"></span>
+          </p>
+          <div class="mt-6 flex flex-wrap gap-4">
+            <a href="contact.html#join" class="px-6 py-3 rounded-full bg-brand text-white font-semibold shadow-glow hover:bg-brand-dark hover:scale-105 transition">Join the Community</a>
+            <a href="#spotlight" class="px-6 py-3 rounded-full bg-white text-darkblue font-semibold hover:scale-105 transition">See Next Event</a>
+          </div>
+        </div>
+        <div class="reveal md:justify-self-end">
+          <div class="grid grid-cols-2 gap-3 max-w-sm md:max-w-md">
+            <div class="hero-chip px-4 py-3 rounded-xl">💛 Real friendships</div>
+            <div class="hero-chip px-4 py-3 rounded-xl">🤝 Respect & harmony</div>
+            <div class="hero-chip px-4 py-3 rounded-xl">🎉 Inclusive events</div>
+            <div class="hero-chip px-4 py-3 rounded-xl">🌱 Environment care</div>
+            <div class="hero-chip px-4 py-3 rounded-xl">🕊️ Interfaith visits</div>
+            <div class="hero-chip px-4 py-3 rounded-xl">🧠 Wellbeing sessions</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/80 text-sm">Scroll</div>
+  </section>
+
+  <!-- WHO WE ARE -->
+  <section class="section max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+    <div class="space-y-5 reveal">
+      <h2 class="text-4xl font-bold text-darkblue">Who We Are</h2>
+      <p class="text-lg text-gray-700">The Wyndham Interfaith Network (WIN) brings together people of every culture and faith to build respect, harmony, and action in Wyndham.</p>
+      <p class="text-lg text-gray-700">We host interfaith visits, wellbeing programs, equality campaigns, environment days and joyful community dinners & festivals.</p>
+      <div class="flex gap-4 pt-2">
+        <a href="about.html" class="px-5 py-3 rounded-xl bg-brand text-white shadow-glow hover:bg-brand-dark hover:scale-105 transition">Learn More</a>
+        <a href="gallery.html" class="px-5 py-3 rounded-xl border border-darkblue text-darkblue hover:bg-darkblue hover:text-white transition">See Moments</a>
+      </div>
+    </div>
+    <div class="who-grid">
+      <img src="images/who.jpg" class="who-card" alt="Shared meal">
+      <img src="images/we.jpg" class="who-card" alt="Celebration">
+      <img src="images/are.jpg" class="who-card" alt="Gathering">
+    </div>
+  </section>
+
+  <!-- FOMO EVENT -->
+  <section id="spotlight" class="section relative bg-gradient-to-br from-darkblue to-brand text-white py-16 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10 items-center">
+      <div class="reveal">
+        <h2 class="text-3xl md:text-4xl font-bold">Interfaith Visit – Sikh Gurudwara</h2>
+        <p class="mt-3 text-white/90">Warm hospitality, Q&A with the Sikh community and a shared langar meal. Experience true belonging.</p>
+        <div class="mt-4 flex flex-wrap gap-3 text-sm">
+          <span class="bg-white/20 px-3 py-2 rounded-lg">📍 Tarneit</span>
+          <span class="bg-white/20 px-3 py-2 rounded-lg">🗓️ Sat 27 Sep • 11:30 AM</span>
+          <span class="bg-white/20 px-3 py-2 rounded-lg">👥 Limited places</span>
+        </div>
+        <div class="mt-5 flex items-center gap-4">
+          <a href="events.html" class="px-6 py-3 rounded-xl bg-white text-darkblue font-semibold shadow hover:scale-105 transition">Reserve Spot</a>
+          <span class="text-sm animate-pulse">🔥 Only <span class="counter" data-count="12">0</span> seats left</span>
+        </div>
+      </div>
+      <div class="relative reveal">
+        <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=1800&auto=format&fit=crop" class="rounded-2xl shadow-xl animate-float" alt="Gurudwara exterior" />
+        <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-white text-darkblue rounded-2xl shadow px-6 py-4 w-[90%] max-w-md">
+          <p class="text-center text-sm font-semibold">Starts In</p>
+          <div class="mt-2 grid grid-cols-4 gap-3 text-center">
+            <div><div id="dd" class="text-2xl font-bold">0</div><div class="text-[11px] uppercase tracking-wider text-gray-500">Days</div></div>
+            <div><div id="hh" class="text-2xl font-bold">0</div><div class="text-[11px] uppercase tracking-wider text-gray-500">Hours</div></div>
+            <div><div id="mm" class="text-2xl font-bold">0</div><div class="text-[11px] uppercase tracking-wider text-gray-500">Minutes</div></div>
+            <div><div id="ss" class="text-2xl font-bold">0</div><div class="text-[11px] uppercase tracking-wider text-gray-500">Seconds</div></div>
+          </div>
+          <p class="mt-3 text-xs text-gray-600 text-center">Last year sold out in 48 hours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUR AGENDA -->
+  <section class="section py-18 md:py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal flex items-end justify-between gap-6">
+        <div>
+          <span class="agenda-pill">Our Agenda</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-darkblue mt-2">Five pillars that guide our work</h2>
+          <p class="text-gray-700 mt-1">Practical programs. Welcoming spaces. Real outcomes.</p>
+        </div>
+        <a href="agenda.html" class="hidden sm:inline-block px-5 py-3 rounded-xl bg-darkblue text-white hover:opacity-90">See All Programs</a>
+      </div>
+
+      <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <article class="reveal agenda-card">
+          <img class="agenda-img w-full" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1600&auto=format&fit=crop" alt="Dialogue">
+          <div class="p-5">
+            <div class="text-3xl">💬</div><h3 class="font-semibold text-darkblue mt-2">Dialogue</h3>
+            <p class="text-sm text-gray-600 mt-1">Visits, Q&A and shared meals across traditions.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="text-xs px-2 py-1 rounded-full bg-brand/10 text-brand">Monthly</span>
+              <a class="text-sm text-brand hover:underline" href="agenda.html">Learn more →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="reveal agenda-card">
+          <img class="agenda-img w-full" src="https://images.unsplash.com/photo-1604881991720-4c52a2b01f59?q=80&w=1600&auto=format&fit=crop" alt="Wellbeing">
+          <div class="p-5">
+            <div class="text-3xl">☕</div><h3 class="font-semibold text-darkblue mt-2">Wellbeing</h3>
+            <p class="text-sm text-gray-600 mt-1">Tea, music and mental health sessions.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="text-xs px-2 py-1 rounded-full bg-brand/10 text-brand">Free</span>
+              <a class="text-sm text-brand hover:underline" href="agenda.html">Learn more →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="reveal agenda-card">
+          <img class="agenda-img w-full" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1600&auto=format&fit=crop" alt="Equality">
+          <div class="p-5">
+            <div class="text-3xl">⚖️</div><h3 class="font-semibold text-darkblue mt-2">Equality</h3>
+            <p class="text-sm text-gray-600 mt-1">Promoting safety and respect for all.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="text-xs px-2 py-1 rounded-full bg-brand/10 text-brand">Panels</span>
+              <a class="text-sm text-brand hover:underline" href="agenda.html">Learn more →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="reveal agenda-card">
+          <img class="agenda-img w-full" src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1600&auto=format&fit=crop" alt="Environment">
+          <div class="p-5">
+            <div class="text-3xl">🌱</div><h3 class="font-semibold text-darkblue mt-2">Environment</h3>
+            <p class="text-sm text-gray-600 mt-1">Tree Day and hands-on eco care.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="text-xs px-2 py-1 rounded-full bg-brand/10 text-brand">Hands-on</span>
+              <a class="text-sm text-brand hover:underline" href="agenda.html">Learn more →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="reveal agenda-card">
+          <img class="agenda-img w-full" src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1600&auto=format&fit=crop" alt="Celebrations">
+          <div class="p-5">
+            <div class="text-3xl">🎉</div><h3 class="font-semibold text-darkblue mt-2">Celebrations</h3>
+            <p class="text-sm text-gray-600 mt-1">Festivals & the Multifaith Dinner.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="text-xs px-2 py-1 rounded-full bg-brand/10 text-brand">Tickets</span>
+              <a class="text-sm text-brand hover:underline" href="agenda.html">Learn more →</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Counters -->
+      <div class="mt-10 grid md:grid-cols-3 gap-6">
+        <div class="reveal rounded-2xl bg-white p-6 border border-gray-100 shadow text-center">
+          <div class="text-3xl font-bold text-darkblue counter" data-count="1200">0</div>
+          <div class="mt-1 text-gray-600">Attendees last year</div>
+        </div>
+        <div class="reveal rounded-2xl bg-white p-6 border border-gray-100 shadow text-center">
+          <div class="text-3xl font-bold text-darkblue counter" data-count="40">0</div>
+          <div class="mt-1 text-gray-600">Partner orgs & faith groups</div>
+        </div>
+        <div class="reveal rounded-2xl bg-white p-6 border border-gray-100 shadow text-center">
+          <div class="text-3xl font-bold text-darkblue counter" data-count="98">0</div>
+          <div class="mt-1 text-gray-600">Would recommend a friend</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT PEOPLE SAY -->
+  <section class="section py-16 test-bg">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold reveal">What people say</h2>
+      <div class="mt-8 relative reveal">
+        <div id="t-wrap" class="overflow-hidden">
+          <div id="t-track" class="flex transition-transform duration-700">
+            <article class="min-w-full px-4">
+              <div class="mx-auto max-w-3xl bubble p-6">
+                <h4 class="text-lg">Community warmth</h4>
+                <p class="mt-2 text-gray-700">“I walked in knowing nobody and left with five new friends.”</p>
+                <div class="mt-3 text-sm text-gray-500">— Sana, Tarneit</div>
+              </div>
+            </article>
+            <article class="min-w-full px-4">
+              <div class="mx-auto max-w-3xl bubble p-6">
+                <h4 class="text-lg">Lasting impact</h4>
+                <p class="mt-2 text-gray-700">“Our students still talk about the visit months later.”</p>
+                <div class="mt-3 text-sm text-gray-500">— Mr. Patel, Local School</div>
+              </div>
+            </article>
+            <article class="min-w-full px-4">
+              <div class="mx-auto max-w-3xl bubble p-6">
+                <h4 class="text-lg">Joyful & inclusive</h4>
+                <p class="mt-2 text-gray-700">“Best community dinner in the West. Inclusive and eye-opening.”</p>
+                <div class="mt-3 text-sm text-gray-500">— Mark, Werribee</div>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="mt-4 flex justify-center gap-2">
+          <button class="t-dot w-2.5 h-2.5 rounded-full bg-gray-300" aria-label="slide 1"></button>
+          <button class="t-dot w-2.5 h-2.5 rounded-full bg-gray-300" aria-label="slide 2"></button>
+          <button class="t-dot w-2.5 h-2.5 rounded-full bg-gray-300" aria-label="slide 3"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTIFY ME -->
+  <section class="section py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10 items-center">
+      <div class="reveal">
+        <h2 class="text-3xl font-bold">Be first to hear about events</h2>
+        <p class="text-gray-700 mt-2">Get friendly updates (no spam). You’ll hear about visits and dinners before they fill up.</p>
+      </div>
+      <form class="reveal grid sm:grid-cols-[1fr_auto] gap-3">
+        <input type="email" required placeholder="Your email address"
+               class="rounded-xl border border-gray-300 px-4 py-3 focus:border-brand focus:ring-2 focus:ring-brand shadow-sm">
+        <button class="px-6 py-3 rounded-xl bg-brand text-white font-semibold shadow-glow hover:bg-brand-dark hover:scale-105 transition">
+          Notify Me
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+      <div class="reveal">
+        <img src="images/win-logo.png" alt="WIN Logo" class="h-14 mb-4" />
+        <p class="text-sm text-gray-300">Building respect, harmony, wellbeing and celebration across Wyndham.</p>
+      </div>
+      <div class="reveal">
+        <h3 class="font-semibold mb-3">Quick Links</h3>
+        <ul class="space-y-2 text-sm text-gray-300">
+            <li><a href="Home.html" class="hover:text-white">Home</a></li>
+          <li><a href="about.html" class="hover:text-white">About</a></li>
+          <li><a href="agenda.html" class="hover:text-white">Agenda</a></li>
+          <li><a href="event.html" class="hover:text-white">Events</a></li>
+          <li><a href="gallery.html" class="hover:text-white">Gallery</a></li>
+          <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <h3 class="font-semibold mb-3">Stay Connected</h3>
+        <p class="text-sm text-gray-300 mb-3">info@wyndhaminterfaith.org</p>
+        <div class="flex gap-4 text-xl">
+          <a href="#" class="hover:text-gold" aria-label="Website">🌐</a>
+          <a href="#" class="hover:text-gold" aria-label="Facebook">📘</a>
+          <a href="#" class="hover:text-gold" aria-label="Instagram">📸</a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-xs text-gray-400 mt-8">© <span id="year"></span> Wyndham Interfaith Network</div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Year + mobile menu
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('menu-btn').onclick = () =>
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+
+    // Reveal on scroll (sections & who-grid cards)
+    const revealEls=[...document.querySelectorAll('.reveal'), ...document.querySelectorAll('.who-card')];
+    const IO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');IO.unobserve(e.target);}})},{threshold:.25});
+    revealEls.forEach(el=>IO.observe(el));
+
+    // Hero slideshow
+    const slides=[...document.querySelectorAll('.slide')]; let si=0;
+    function show(n){slides.forEach((s,i)=>s.style.opacity=i===n?1:0)}
+    show(0); setInterval(()=>{si=(si+1)%slides.length; show(si)},5000);
+
+    // Typewriter (short words: Unity, Harmony, Respect, Belonging, Service)
+    const words=["Unity","Harmony","Respect","Belonging","Service"];
+    const twWord=document.getElementById('twWord');
+    let wi=0, ci=0, del=false;
+    function typeTick(){
+      const full=words[wi];
+      ci += del?-1:1;
+      twWord.textContent = full.slice(0,ci);
+      if(!del && ci===full.length){ setTimeout(()=>del=true, 700); }
+      if(del && ci===0){ del=false; wi=(wi+1)%words.length; }
+      setTimeout(typeTick, del?45:55);
+    }
+    typeTick();
+
+    // Counters 0 -> target
+    function animateCounter(el, target, duration=1500){
+      const start=0, t0=performance.now();
+      function step(now){const p=Math.min((now-t0)/duration,1);el.textContent=Math.floor(p*target).toLocaleString(); if(p<1)requestAnimationFrame(step);}
+      requestAnimationFrame(step);
+    }
+    const counters=document.querySelectorAll('.counter');
+    const counterIO=new IntersectionObserver(ents=>{
+      ents.forEach(ent=>{
+        if(ent.isIntersecting){
+          const el=ent.target, val=parseInt(el.dataset.count,10)||0;
+          animateCounter(el,val); counterIO.unobserve(el);
+        }
+      });
+    },{threshold:.5});
+    counters.forEach(c=>counterIO.observe(c));
+
+    // Countdown (animate from 0 first, then tick)
+    const dd=document.getElementById('dd'), hh=document.getElementById('hh'),
+          mm=document.getElementById('mm'), ss=document.getElementById('ss');
+    if(dd && hh && mm && ss){
+      const target=new Date('2025-09-27T11:30:00');
+      function parts(){const now=new Date();let d=Math.max(0,target-now);const D=Math.floor(d/86400000);d-=D*86400000;const H=Math.floor(d/3600000);d-=H*3600000;const M=Math.floor(d/60000);d-=M*60000;const S=Math.floor(d/1000);return {D,H,M,S};}
+      (function init(){const t=parts(); animateCounter(dd,t.D,1000); animateCounter(hh,t.H,1000); animateCounter(mm,t.M,1000); animateCounter(ss,t.S,1000);
+        setTimeout(()=>setInterval(()=>{const t=parts(); dd.textContent=t.D; hh.textContent=t.H; mm.textContent=t.M; ss.textContent=t.S;},1000),1100);
+      })();
+    }
+
+    // Testimonials carousel
+    const tTrack=document.getElementById('t-track'); const tDots=[...document.querySelectorAll('.t-dot')]; let ti=0;
+    function go(n){ti=(n+tDots.length)%tDots.length; tTrack.style.transform=`translateX(-${ti*100}%)`; tDots.forEach((d,i)=>d.style.backgroundColor=i===ti?'#2e7d32':'#d1d5db');}
+    go(0); setInterval(()=>go(ti+1),5000); tDots.forEach((d,i)=>d.addEventListener('click',()=>go(i)));
+  </script>
+</body>
+</html>
+
