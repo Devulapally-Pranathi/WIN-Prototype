@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Wyndham Interfaith Network – Unity in Diversity</title>
   <meta name="description" content="Wyndham Interfaith Network connects people across faiths through dialogue, celebration, wellbeing, equality and caring for our environment." />
 
-  <!-- Tailwind CDN -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -20,14 +20,18 @@
             glow:'0 10px 30px rgba(46,125,50,.25)', mega:'0 20px 60px rgba(0,0,0,.25)'
           },
           keyframes:{
-            zoom:{'0%,100%':{transform:'scale(1.1)'},'50%':{transform:'scale(1)'}},
             float:{'0%,100%':{transform:'translateY(0)'},'50%':{transform:'translateY(-8px)'}},
-            slideUp:{from:{opacity:0,transform:'translateY(40px)'},to:{opacity:1,transform:'translateY(0)'}}
+            pop:{'0%':{transform:'scale(.98)',opacity:.9},'70%':{transform:'scale(1.02)',opacity:1},'100%':{transform:'scale(1)',opacity:1}},
+            fadeIn:{from:{opacity:0,transform:'translateY(20px)'},to:{opacity:1,transform:'none'}},
+            slideInLeft:{from:{opacity:0,transform:'translateX(-18px)'},to:{opacity:1,transform:'none'}},
+            blink:{'50%':{opacity:0}}
           },
           animation:{
-            zoom:'zoom 15s ease-in-out infinite',
             float:'float 6s ease-in-out infinite',
-            slideUp:'slideUp 1s ease both'
+            pop:'pop .9s cubic-bezier(.2,.9,.3,1) both',
+            fadeIn:'fadeIn .7s ease both',
+            slideInLeft:'slideInLeft .7s ease both',
+            blink:'blink .9s steps(1) infinite'
           }
         }
       }
@@ -38,59 +42,111 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* Typography & base */
-    body{font-family:'Open Sans',system-ui,sans-serif}
+    /* base */
+    :root { color-scheme: light; }
+    body{font-family:'Open Sans',system-ui,sans-serif;color:#0f1724;line-height:1.5;background:#fff}
     h1,h2,h3,h4{font-family:'Playfair Display',serif}
+    a{color:inherit}
 
-    /* Section dividers & reveals */
-    .section{position:relative}
-    .section::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,rgba(46,125,50,.12),rgba(43,46,115,.12))}
-    .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+    /* small helpers */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease}
     .reveal.in{opacity:1;transform:none}
 
-    /* Hero */
-    .hero-chip{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.25)}
-    .typeword{display:none}
-    .typeword.active{display:inline}
-    #caret{display:inline-block;width:2px;height:1.1em;background:#fff;vertical-align:-.2em;margin-left:.25rem;animation:blink .9s steps(1) infinite}
+    /* HERO */
+    #hero{position:relative;height:92vh;min-height:560px;margin-top:4rem;overflow:hidden}
+    .hero-media{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+    .hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1s ease, transform 12s ease;transform:scale(1)}
+    .hero-media img.active{opacity:1;transform:scale(1.06)}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,6,23,.18),rgba(2,6,23,.28));z-index:1}
+    .hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;height:100%;display:flex;align-items:center;padding:2rem;gap:2rem}
+    @media (max-width:900px){ .hero-content{flex-direction:column;align-items:flex-start;padding:1.25rem} }
+
+    .chip{display:inline-flex;padding:.35rem .6rem;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);font-weight:700;color:#fff}
+    .hero-title{font-size:3.2rem;line-height:1.02;margin-top:.6rem;font-weight:800;color:#fff;text-shadow:0 6px 18px rgba(2,6,23,.6)}
+    @media (max-width:680px){ .hero-title{font-size:2rem} }
+
+    .hero-sub{margin-top:.6rem;color:rgba(255,255,255,.95);max-width:56ch}
+    .hero-ctas{margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap}
+    .btn-primary{background:#2e7d32;color:white;padding:.6rem 1rem;border-radius:999px;font-weight:700;box-shadow:0 10px 30px rgba(46,125,50,.18)}
+    .btn-ghost{background:white;color:#2b2e73;padding:.5rem .9rem;border-radius:10px;font-weight:700}
+
+    .hero-right{width:360px;min-width:220px;background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.05));border-radius:14px;padding:1rem;border:1px solid rgba(255,255,255,.08);backdrop-filter: blur(8px);box-shadow:0 18px 46px rgba(2,6,23,.28);color:#fff}
+    @media (max-width:900px){ .hero-right{width:100%} }
+
+    /* make glass content high-contrast: white-ish card for text inside glass */
+    .hero-right .glass-inner{background:linear-gradient(180deg,#ffffffef,#ffffffe6);color:#0f1724;padding:0.8rem;border-radius:10px}
+
+    /* WHO (integrated) */
+    #who{max-width:1200px;margin:0 auto;padding:2.25rem 1rem;display:grid;grid-template-columns:1fr 420px;gap:1.25rem;align-items:center}
+    @media (max-width:980px){ #who{grid-template-columns:1fr;padding:1rem} }
+    .who-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem}
+    .who-grid img{width:100%;height:220px;object-fit:cover;border-radius:12px;box-shadow:0 12px 36px rgba(2,6,23,.06);transition:transform .35s}
+    .who-grid img:hover{transform:translateY(-6px)}
+
+    /* EVENT scroller (FOMO) */
+    .events-wrap{overflow:hidden;position:relative;padding:1rem 0}
+    .events-track{display:flex;gap:1rem;align-items:stretch;will-change:transform}
+    .event-card{flex:0 0 360px;background:white;border-radius:12px;padding:1rem;box-shadow:0 12px 36px rgba(2,6,23,.06);display:flex;flex-direction:column;gap:.6rem}
+    .event-meta{font-weight:700;color:#2b2e73}
+
+    /* AGENDA grid */
+    #agenda{background:#f7faf8;padding:2rem 1rem}
+    .agenda-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+    @media (max-width:1200px){ .agenda-grid{grid-template-columns:repeat(3,1fr)} }
+    @media (max-width:720px){ .agenda-grid{grid-template-columns:1fr} }
+    .agenda-card{background:white;border-radius:12px;overflow:hidden;box-shadow:0 12px 36px rgba(2,6,23,.06);transition:transform .28s,box-shadow .28s}
+    .agenda-card:hover{transform:translateY(-8px);box-shadow:0 20px 48px rgba(2,6,23,.12)}
+    .agenda-card img{width:100%;height:150px;object-fit:cover}
+
+    /* counters */
+    .counters{max-width:1200px;margin:1.25rem auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    @media (max-width:720px){ .counters{grid-template-columns:1fr} }
+    .stat{background:white;border-radius:12px;padding:1rem;text-align:center;box-shadow:0 12px 36px rgba(2,6,23,.06)}
+
+    /* testimonials */
+    #tests{padding:2rem 1rem}
+    .test-track{display:flex;gap:1rem;overflow:hidden}
+    .test-card{flex:0 0 320px;background:white;padding:1rem;border-radius:12px;box-shadow:0 12px 36px rgba(2,6,23,.06)}
+
+    /* gallery */
+    #gallery{max-width:1200px;margin:0 auto;padding:2rem 1rem}
+    .grid-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    @media (max-width:980px){ .grid-g{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:640px){ .grid-g{grid-template-columns:1fr} }
+    .grid-g img{width:100%;height:220px;object-fit:cover;border-radius:12px;box-shadow:0 10px 28px rgba(2,6,23,.06);transition:transform .28s}
+    .grid-g img:hover{transform:scale(1.03)}
+
+    /* newsletter */
+    .newsletter{max-width:900px;margin:0 auto;padding:2rem 1rem}
+    .newsletter .card{background:white;border-radius:12px;padding:1.25rem;box-shadow:0 18px 44px rgba(2,6,23,.06)}
+    .form-row{display:flex;gap:.5rem}
+    @media (max-width:720px){ .form-row{flex-direction:column} }
+
+    /* toast */
+    .toast{position:fixed;right:20px;bottom:20px;background:#2b2e73;color:#fff;padding:.6rem 1rem;border-radius:10px;box-shadow:0 8px 30px rgba(2,6,23,.18);opacity:0;transform:translateY(8px);transition:opacity .26s,transform .26s;z-index:80}
+
+    /* caret blink (hero type) */
     @keyframes blink{50%{opacity:0}}
+    .caret{display:inline-block;width:2px;height:1.05em;background:#fff;vertical-align:-.18em;margin-left:.25rem;animation:blink .9s steps(1) infinite}
 
-    /* Who we are grid */
-    .who-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .who-card{border-radius:18px;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.12);transform:translateY(12px);opacity:0;transition:opacity .6s ease, transform .6s ease}
-    .who-card.in{opacity:1;transform:none}
-    .who-card:nth-child(2){transition-delay:.12s}
-    .who-card:nth-child(3){transition-delay:.24s}
-
-    /* Agenda */
-    .agenda-pill{display:inline-flex;align-items:center;gap:.5rem;background:#eef7f0;border:1px solid #d7eadc;color:#1b5e20;padding:.4rem .75rem;border-radius:9999px;font-weight:600}
-    .agenda-card{border:1px solid #eef0f4;border-radius:16px;overflow:hidden;background:#fff;transition:transform .25s ease, box-shadow .25s ease}
-    .agenda-card:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(0,0,0,.12)}
-    .agenda-img{height:144px;object-fit:cover}
-
-    /* Testimonials */
-    .test-bg{background:linear-gradient(180deg,#f7faf9 0%, #eef6f0 100%)}
-    .bubble{border:1px solid #e3e9e5;border-radius:18px;background:#fff;box-shadow:0 10px 24px rgba(46,125,50,.12)}
-    .bubble h4{color:#2b2e73}
   </style>
 </head>
 <body class="bg-white text-gray-800 antialiased">
-
   <!-- Sticky CTA (mobile) -->
   <aside class="md:hidden fixed bottom-0 inset-x-0 z-50 bg-darkblue text-white px-4 py-3 flex items-center justify-between shadow-xl">
     <span class="text-sm">Be part of WIN ✨</span>
     <a href="contact.html#join" class="px-4 py-2 rounded-full bg-brand text-white font-semibold shadow-glow">Join Us</a>
   </aside>
 
-  <!-- NAVBAR -->
+  <!-- NAVBAR (unchanged) -->
   <header class="fixed top-0 inset-x-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100">
     <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-3">
+      <a href="Home.html" class="flex items-center gap-3">
         <img src="images/logo.jpg" alt="Wyndham Interfaith Network" class="h-12 w-auto" />
         <span class="font-semibold text-darkblue">Wyndham Interfaith Network</span>
       </a>
       <nav class="hidden md:flex items-center gap-6 font-medium">
-        <a href="index.html" class="text-brand">Home</a>
+        <a href="Home.html" class="text-brand">Home</a>
         <a href="about.html" class="hover:text-brand">About</a>
         <a href="agenda.html" class="hover:text-brand">Agenda</a>
         <a href="event.html" class="hover:text-brand">Events</a>
@@ -111,246 +167,317 @@
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="section relative h-[92vh] mt-16 overflow-hidden">
-    <!-- Slides -->
-    <div class="absolute inset-0">
-      <img class="slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 animate-zoom"
-           src="images/Gather-Your-Community.jpg" alt="Community dinner" />
-      <img class="slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 animate-zoom"
-           src="images/hero2.jpg" alt="Festival celebration" />
-      <img class="slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 animate-zoom"
-           src="images/hero3.jpg" alt="Interfaith gathering" />
-    </div>
-    <div class="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/35"></div>
+  <!-- MAIN -->
+  <main>
 
-    <!-- Content -->
-    <div class="relative z-10 max-w-7xl mx-auto h-full px-6 flex items-center">
-      <div class="grid md:grid-cols-2 gap-10 w-full text-white">
-        <div class="reveal">
-          <span class="inline-flex hero-chip px-3 py-1 rounded-full text-sm">Community-led • Non-profit</span>
-          <h1 class="mt-4 text-5xl md:text-6xl font-bold">Unity in Diversity</h1>
-          <p class="mt-3 text-lg md:text-xl text-white/90 max-w-xl">
-            <span id="twPrefix">We build</span> <span id="twWord" class="font-semibold"></span><span id="caret"></span>
+    <!-- HERO: 3 images crossfade, zoom & subtle parallax -->
+    <section id="hero" aria-label="Hero">
+      <div class="hero-media" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1800&q=80" alt="" class="hero-img" />
+        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1800&q=80" alt="" class="hero-img" />
+        <img src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=1800&q=80" alt="" class="hero-img" />
+      </div>
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+        <div class="hero-left reveal">
+          <div class="chip">Community-led • Non-profit</div>
+
+          <h1 class="hero-title">Unity in Diversity</h1>
+
+          <p class="hero-sub">
+            <strong id="twPrefix">We build</strong>
+            <span id="twWord" style="font-weight:800;margin-left:.35rem"></span>
+            <span class="caret" id="caret"></span>
+            <br class="hidden sm:block" />
+            Wyndham Interfaith Network connects people across faiths through dialogue, celebration, wellbeing and caring for our environment.
           </p>
-          <div class="mt-6 flex flex-wrap gap-4">
-            <a href="contact.html#join" class="px-6 py-3 rounded-full bg-brand text-white font-semibold shadow-glow hover:bg-brand-dark hover:scale-105 transition">Join the Community</a>
-            <a href="#spotlight" class="px-6 py-3 rounded-full bg-white text-darkblue font-semibold hover:scale-105 transition">See Next Event</a>
+
+          <div class="hero-ctas">
+            <button id="joinHero" class="btn-primary">Join the Community</button>
+            <a href="#spotlight" class="btn-ghost">See Next Event</a>
+          </div>
+
+          <div class="mt-4 grid grid-cols-3 gap-3">
+            <div class="floating-card reveal" style="background:linear-gradient(180deg,rgba(255,255,255,.95),#fff);color:#0f1724;padding:.6rem;border-radius:12px;border:1px solid rgba(2,6,23,.04);box-shadow:0 12px 36px rgba(2,6,23,.06)">💛 Real friendships</div>
+            <div class="floating-card reveal" style="background:linear-gradient(180deg,rgba(255,255,255,.95),#fff);color:#0f1724;padding:.6rem;border-radius:12px;border:1px solid rgba(2,6,23,.04);box-shadow:0 12px 36px rgba(2,6,23,.06)">🤝 Respect & harmony</div>
+            <div class="floating-card reveal" style="background:linear-gradient(180deg,rgba(255,255,255,.95),#fff);color:#0f1724;padding:.6rem;border-radius:12px;border:1px solid rgba(2,6,23,.04);box-shadow:0 12px 36px rgba(2,6,23,.06)">🎉 Inclusive events</div>
           </div>
         </div>
-        <div class="reveal md:justify-self-end">
-          <div class="grid grid-cols-2 gap-3 max-w-sm md:max-w-md">
-            <div class="hero-chip px-4 py-3 rounded-xl">💛 Real friendships</div>
-            <div class="hero-chip px-4 py-3 rounded-xl">🤝 Respect & harmony</div>
-            <div class="hero-chip px-4 py-3 rounded-xl">🎉 Inclusive events</div>
-            <div class="hero-chip px-4 py-3 rounded-xl">🌱 Environment care</div>
-            <div class="hero-chip px-4 py-3 rounded-xl">🕊️ Interfaith visits</div>
-            <div class="hero-chip px-4 py-3 rounded-xl">🧠 Wellbeing sessions</div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/80 text-sm">Scroll</div>
-  </section>
-
-  <!-- WHO WE ARE -->
-  <section class="section max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
-    <div class="space-y-5 reveal">
-      <h2 class="text-4xl font-bold text-darkblue">Who We Are</h2>
-      <p class="text-lg text-gray-700">The Wyndham Interfaith Network (WIN) brings together people of every culture and faith to build respect, harmony, and action in Wyndham.</p>
-      <p class="text-lg text-gray-700">We host interfaith visits, wellbeing programs, equality campaigns, environment days and joyful community dinners & festivals.</p>
-      <div class="flex gap-4 pt-2">
-        <a href="about.html" class="px-5 py-3 rounded-xl bg-brand text-white shadow-glow hover:bg-brand-dark hover:scale-105 transition">Learn More</a>
-        <a href="gallery.html" class="px-5 py-3 rounded-xl border border-darkblue text-darkblue hover:bg-darkblue hover:text-white transition">See Moments</a>
-      </div>
-    </div>
-    <div class="who-grid">
-      <img src="images/who.jpg" class="who-card" alt="Shared meal">
-      <img src="images/we.jpg" class="who-card" alt="Celebration">
-      <img src="images/are.jpg" class="who-card" alt="Gathering">
-    </div>
-  </section>
-
-  <!-- FOMO EVENT -->
-  <section id="spotlight" class="section relative bg-gradient-to-br from-darkblue to-brand text-white py-16 overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10 items-center">
-      <div class="reveal">
-        <h2 class="text-3xl md:text-4xl font-bold">Interfaith Visit – Sikh Gurudwara</h2>
-        <p class="mt-3 text-white/90">Warm hospitality, Q&A with the Sikh community and a shared langar meal. Experience true belonging.</p>
-        <div class="mt-4 flex flex-wrap gap-3 text-sm">
-          <span class="bg-white/20 px-3 py-2 rounded-lg">📍 Tarneit</span>
-          <span class="bg-white/20 px-3 py-2 rounded-lg">🗓️ Sat 27 Sep • 11:30 AM</span>
-          <span class="bg-white/20 px-3 py-2 rounded-lg">👥 Limited places</span>
-        </div>
-        <div class="mt-5 flex items-center gap-4">
-          <a href="events.html" class="px-6 py-3 rounded-xl bg-white text-darkblue font-semibold shadow hover:scale-105 transition">Reserve Spot</a>
-          <span class="text-sm animate-pulse">🔥 Only <span class="counter" data-count="12">0</span> seats left</span>
-        </div>
-      </div>
-      <div class="relative reveal">
-        <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=1800&auto=format&fit=crop" class="rounded-2xl shadow-xl animate-float" alt="Gurudwara exterior" />
-        <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-white text-darkblue rounded-2xl shadow px-6 py-4 w-[90%] max-w-md">
-          <p class="text-center text-sm font-semibold">Starts In</p>
-          <div class="mt-2 grid grid-cols-4 gap-3 text-center">
-            <div><div id="dd" class="text-2xl font-bold">0</div><div class="text-[11px] uppercase tracking-wider text-gray-500">Days</div></div>
-            <div><div id="hh" class="text-2xl font-bold">0</div><div class="text-[11px] uppercase tracking-wider text-gray-500">Hours</div></div>
-            <div><div id="mm" class="text-2xl font-bold">0</div><div class="text-[11px] uppercase tracking-wider text-gray-500">Minutes</div></div>
-            <div><div id="ss" class="text-2xl font-bold">0</div><div class="text-[11px] uppercase tracking-wider text-gray-500">Seconds</div></div>
-          </div>
-          <p class="mt-3 text-xs text-gray-600 text-center">Last year sold out in 48 hours.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- OUR AGENDA -->
-  <section class="section py-18 md:py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="reveal flex items-end justify-between gap-6">
-        <div>
-          <span class="agenda-pill">Our Agenda</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-darkblue mt-2">Five pillars that guide our work</h2>
-          <p class="text-gray-700 mt-1">Practical programs. Welcoming spaces. Real outcomes.</p>
-        </div>
-        <a href="agenda.html" class="hidden sm:inline-block px-5 py-3 rounded-xl bg-darkblue text-white hover:opacity-90">See All Programs</a>
-      </div>
-
-      <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
-        <article class="reveal agenda-card">
-          <img class="agenda-img w-full" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1600&auto=format&fit=crop" alt="Dialogue">
-          <div class="p-5">
-            <div class="text-3xl">💬</div><h3 class="font-semibold text-darkblue mt-2">Dialogue</h3>
-            <p class="text-sm text-gray-600 mt-1">Visits, Q&A and shared meals across traditions.</p>
-            <div class="mt-3 flex items-center justify-between">
-              <span class="text-xs px-2 py-1 rounded-full bg-brand/10 text-brand">Monthly</span>
-              <a class="text-sm text-brand hover:underline" href="agenda.html">Learn more →</a>
+        <aside class="hero-right reveal">
+          <!-- Visible glass inner to maintain colour and legibility -->
+          <div class="glass-inner">
+            <div class="flex justify-between items-center">
+              <div class="text-sm font-semibold">Upcoming</div>
+              <div class="inline-flex items-center gap-2 px-2 py-1 rounded-full bg-gradient-to-r from-brand to-darkblue text-white text-sm">🔥 Live</div>
             </div>
-          </div>
-        </article>
 
-        <article class="reveal agenda-card">
-          <img class="agenda-img w-full" src="https://images.unsplash.com/photo-1604881991720-4c52a2b01f59?q=80&w=1600&auto=format&fit=crop" alt="Wellbeing">
-          <div class="p-5">
-            <div class="text-3xl">☕</div><h3 class="font-semibold text-darkblue mt-2">Wellbeing</h3>
-            <p class="text-sm text-gray-600 mt-1">Tea, music and mental health sessions.</p>
-            <div class="mt-3 flex items-center justify-between">
-              <span class="text-xs px-2 py-1 rounded-full bg-brand/10 text-brand">Free</span>
-              <a class="text-sm text-brand hover:underline" href="agenda.html">Learn more →</a>
-            </div>
-          </div>
-        </article>
+            <div class="mt-3 text-lg font-bold">Interfaith Visit — Sikh Gurudwara</div>
+            <div class="text-sm text-gray-700 mt-1">Tarneit · Sat 27 Sep · 11:30 AM</div>
 
-        <article class="reveal agenda-card">
-          <img class="agenda-img w-full" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1600&auto=format&fit=crop" alt="Equality">
-          <div class="p-5">
-            <div class="text-3xl">⚖️</div><h3 class="font-semibold text-darkblue mt-2">Equality</h3>
-            <p class="text-sm text-gray-600 mt-1">Promoting safety and respect for all.</p>
-            <div class="mt-3 flex items-center justify-between">
-              <span class="text-xs px-2 py-1 rounded-full bg-brand/10 text-brand">Panels</span>
-              <a class="text-sm text-brand hover:underline" href="agenda.html">Learn more →</a>
+            <div class="mt-4">
+              <button id="reserveHero" class="btn-ghost" style="width:100%;">Reserve Spot</button>
             </div>
-          </div>
-        </article>
 
-        <article class="reveal agenda-card">
-          <img class="agenda-img w-full" src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1600&auto=format&fit=crop" alt="Environment">
-          <div class="p-5">
-            <div class="text-3xl">🌱</div><h3 class="font-semibold text-darkblue mt-2">Environment</h3>
-            <p class="text-sm text-gray-600 mt-1">Tree Day and hands-on eco care.</p>
-            <div class="mt-3 flex items-center justify-between">
-              <span class="text-xs px-2 py-1 rounded-full bg-brand/10 text-brand">Hands-on</span>
-              <a class="text-sm text-brand hover:underline" href="agenda.html">Learn more →</a>
+            <div class="mt-3 flex justify-between items-center bg-white/90 rounded-md p-2">
+              <div style="font-weight:700;color:#1f2937">Starts in</div>
+              <div style="display:flex;gap:.5rem;align-items:center">
+                <div class="text-center"><div id="dd" class="text-lg font-bold">0</div><div class="text-xs text-gray-500">Days</div></div>
+                <div class="text-center"><div id="hh" class="text-lg font-bold">00</div><div class="text-xs text-gray-500">Hrs</div></div>
+                <div class="text-center"><div id="mm" class="text-lg font-bold">00</div><div class="text-xs text-gray-500">Min</div></div>
+                <div class="text-center"><div id="ss" class="text-lg font-bold">00</div><div class="text-xs text-gray-500">Sec</div></div>
+              </div>
             </div>
-          </div>
-        </article>
 
-        <article class="reveal agenda-card">
-          <img class="agenda-img w-full" src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1600&auto=format&fit=crop" alt="Celebrations">
-          <div class="p-5">
-            <div class="text-3xl">🎉</div><h3 class="font-semibold text-darkblue mt-2">Celebrations</h3>
-            <p class="text-sm text-gray-600 mt-1">Festivals & the Multifaith Dinner.</p>
-            <div class="mt-3 flex items-center justify-between">
-              <span class="text-xs px-2 py-1 rounded-full bg-brand/10 text-brand">Tickets</span>
-              <a class="text-sm text-brand hover:underline" href="agenda.html">Learn more →</a>
-            </div>
           </div>
-        </article>
+        </aside>
+      </div>
+    </section>
+
+    <!-- WHO: integrated section (not blocky) -->
+    <section id="who" aria-label="Who we are">
+      <div class="who-text">
+        <h2 class="text-4xl font-bold who-heading">Who We Are</h2>
+        <p class="mt-4 text-gray-700">Wyndham Interfaith Network (WIN) brings together people of every culture and faith to build respect, harmony, and action in Wyndham. We host interfaith visits, wellbeing programs, equality campaigns, environment days and joyful community dinners & festivals.</p>
+
+        <div class="mt-4 flex gap-3">
+          <a class="px-4 py-2 rounded-xl bg-brand text-white shadow-glow hover:bg-brand-dark" href="about.html">Learn More</a>
+          <a class="px-4 py-2 rounded-xl border border-darkblue text-darkblue hover:bg-darkblue hover:text-white" href="gallery.html">See Moments</a>
+        </div>
       </div>
 
-      <!-- Counters -->
-      <div class="mt-10 grid md:grid-cols-3 gap-6">
-        <div class="reveal rounded-2xl bg-white p-6 border border-gray-100 shadow text-center">
-          <div class="text-3xl font-bold text-darkblue counter" data-count="1200">0</div>
-          <div class="mt-1 text-gray-600">Attendees last year</div>
-        </div>
-        <div class="reveal rounded-2xl bg-white p-6 border border-gray-100 shadow text-center">
-          <div class="text-3xl font-bold text-darkblue counter" data-count="40">0</div>
-          <div class="mt-1 text-gray-600">Partner orgs & faith groups</div>
-        </div>
-        <div class="reveal rounded-2xl bg-white p-6 border border-gray-100 shadow text-center">
-          <div class="text-3xl font-bold text-darkblue counter" data-count="98">0</div>
-          <div class="mt-1 text-gray-600">Would recommend a friend</div>
-        </div>
+      <div class="who-grid" aria-hidden="false">
+        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80" alt="Shared meal" class="reveal who-card" />
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80" alt="Celebration" class="reveal who-card" />
+        <img src="https://images.unsplash.com/photo-1520705264482-5f0f3d50f9b0?auto=format&fit=crop&w=1200&q=80" alt="Gathering" class="reveal who-card" />
+        <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1200&q=80" alt="Festival" class="reveal who-card" />
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- WHAT PEOPLE SAY -->
-  <section class="section py-16 test-bg">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold reveal">What people say</h2>
-      <div class="mt-8 relative reveal">
-        <div id="t-wrap" class="overflow-hidden">
-          <div id="t-track" class="flex transition-transform duration-700">
-            <article class="min-w-full px-4">
-              <div class="mx-auto max-w-3xl bubble p-6">
-                <h4 class="text-lg">Community warmth</h4>
-                <p class="mt-2 text-gray-700">“I walked in knowing nobody and left with five new friends.”</p>
-                <div class="mt-3 text-sm text-gray-500">— Sana, Tarneit</div>
+    <!-- SPOTLIGHT / EVENTS: now a horizontal looping scroller with multiple events -->
+    <section id="spotlight" aria-label="Spotlight events" class="py-8">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-3xl font-bold text-darkblue">What's On — Featured & Upcoming</h2>
+          <div class="text-sm text-gray-600">Hurry — seats fill fast!</div>
+        </div>
+
+        <!-- scrolling track -->
+        <div class="events-wrap">
+          <div class="events-track" id="eventsTrack" aria-live="polite">
+            <!-- repeat several event cards (images from Unsplash) -->
+            <article class="event-card" role="article">
+              <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="" class="rounded-md" style="height:140px;object-fit:cover;width:100%" />
+              <div class="mt-2">
+                <div class="event-meta">Interfaith Visit — Gurudwara</div>
+                <div class="text-sm text-gray-600">Tarneit · Sat 27 Sep · 11:30 AM</div>
+              </div>
+              <div class="mt-auto flex items-center justify-between">
+                <div class="text-sm text-red-600 font-semibold">🔥 Limited seats</div>
+                <button class="px-3 py-1 rounded-md bg-brand text-white text-sm">Reserve</button>
               </div>
             </article>
-            <article class="min-w-full px-4">
-              <div class="mx-auto max-w-3xl bubble p-6">
-                <h4 class="text-lg">Lasting impact</h4>
-                <p class="mt-2 text-gray-700">“Our students still talk about the visit months later.”</p>
-                <div class="mt-3 text-sm text-gray-500">— Mr. Patel, Local School</div>
+
+            <article class="event-card">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80" alt="" class="rounded-md" style="height:140px;object-fit:cover;width:100%" />
+              <div class="mt-2">
+                <div class="event-meta">Wellbeing Tea & Music</div>
+                <div class="text-sm text-gray-600">Werribee · Sun 05 Oct · 3:00 PM</div>
+              </div>
+              <div class="mt-auto flex items-center justify-between">
+                <div class="text-sm text-green-600 font-semibold">Free</div>
+                <button class="px-3 py-1 rounded-md bg-brand text-white text-sm">Join</button>
               </div>
             </article>
-            <article class="min-w-full px-4">
-              <div class="mx-auto max-w-3xl bubble p-6">
-                <h4 class="text-lg">Joyful & inclusive</h4>
-                <p class="mt-2 text-gray-700">“Best community dinner in the West. Inclusive and eye-opening.”</p>
-                <div class="mt-3 text-sm text-gray-500">— Mark, Werribee</div>
+
+            <article class="event-card">
+              <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80" alt="" class="rounded-md" style="height:140px;object-fit:cover;width:100%" />
+              <div class="mt-2">
+                <div class="event-meta">Multifaith Dinner</div>
+                <div class="text-sm text-gray-600">Hobsons Bay · Sat 12 Nov · 6:30 PM</div>
+              </div>
+              <div class="mt-auto flex items-center justify-between">
+                <div class="text-sm text-yellow-600 font-semibold">Tickets</div>
+                <button class="px-3 py-1 rounded-md bg-brand text-white text-sm">Tickets</button>
               </div>
             </article>
+
+            <article class="event-card">
+              <img src="https://images.unsplash.com/photo-1497493292307-31c376b6e479?auto=format&fit=crop&w=800&q=80" alt="" class="rounded-md" style="height:140px;object-fit:cover;width:100%" />
+              <div class="mt-2">
+                <div class="event-meta">Tree Day — Community</div>
+                <div class="text-sm text-gray-600">Point Cook · Sun 20 Oct · 9:00 AM</div>
+              </div>
+              <div class="mt-auto flex items-center justify-between">
+                <div class="text-sm text-brand font-semibold">Hands-on</div>
+                <button class="px-3 py-1 rounded-md bg-brand text-white text-sm">Volunteer</button>
+              </div>
+            </article>
+
+            <!-- duplicate set to make continuous feeling -->
+            <article class="event-card">
+              <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="" class="rounded-md" style="height:140px;object-fit:cover;width:100%" />
+              <div class="mt-2">
+                <div class="event-meta">Interfaith Visit — Gurudwara</div>
+                <div class="text-sm text-gray-600">Tarneit · Sat 27 Sep · 11:30 AM</div>
+              </div>
+              <div class="mt-auto flex items-center justify-between">
+                <div class="text-sm text-red-600 font-semibold">🔥 Limited seats</div>
+                <button class="px-3 py-1 rounded-md bg-brand text-white text-sm">Reserve</button>
+              </div>
+            </article>
+
+            <!-- you can add more cards similarly -->
           </div>
         </div>
-        <div class="mt-4 flex justify-center gap-2">
-          <button class="t-dot w-2.5 h-2.5 rounded-full bg-gray-300" aria-label="slide 1"></button>
-          <button class="t-dot w-2.5 h-2.5 rounded-full bg-gray-300" aria-label="slide 2"></button>
-          <button class="t-dot w-2.5 h-2.5 rounded-full bg-gray-300" aria-label="slide 3"></button>
+      </div>
+    </section>
+
+    <!-- AGENDA (kept but restyled) -->
+    <section id="agenda" aria-label="Our Agenda">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between mb-4 px-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full agenda-pill">Our Agenda</div>
+            <h2 class="text-3xl md:text-4xl font-bold text-darkblue mt-3">Five pillars that guide our work</h2>
+            <p class="text-gray-700 mt-1">Practical programs. Welcoming spaces. Real outcomes.</p>
+          </div>
+          <a class="hidden sm:inline-block bg-darkblue text-white px-4 py-2 rounded-md" href="agenda.html">See All Programs</a>
+        </div>
+
+        <div class="agenda-grid px-4">
+          <!-- card 1 -->
+          <article class="agenda-card reveal">
+            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1600&q=80" alt="Dialogue">
+            <div class="p-5">
+              <div class="text-3xl">💬</div><h3 class="font-semibold text-darkblue mt-2">Dialogue</h3>
+              <p class="text-sm text-gray-600 mt-1">Visits, Q&A and shared meals across traditions.</p>
+              <div class="mt-3 flex items-center justify-between">
+                <span class="text-xs px-2 py-1 rounded-full bg-brand/10 text-brand">Monthly</span>
+                <a class="text-sm text-brand hover:underline" href="agenda.html">Learn more →</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- card 2 -->
+          <article class="agenda-card reveal">
+            <img src="https://images.unsplash.com/photo-1604881991720-4c52a2b01f59?auto=format&fit=crop&w=1600&q=80" alt="Wellbeing">
+            <div class="p-5">
+              <div class="text-3xl">☕</div><h3 class="font-semibold text-darkblue mt-2">Wellbeing</h3>
+              <p class="text-sm text-gray-600 mt-1">Tea, music and mental health sessions.</p>
+              <div class="mt-3 flex items-center justify-between">
+                <span class="text-xs px-2 py-1 rounded-full bg-brand/10 text-brand">Free</span>
+                <a class="text-sm text-brand hover:underline" href="agenda.html">Learn more →</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- card 3 -->
+          <article class="agenda-card reveal">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1600&q=80" alt="Equality">
+            <div class="p-5">
+              <div class="text-3xl">⚖️</div><h3 class="font-semibold text-darkblue mt-2">Equality</h3>
+              <p class="text-sm text-gray-600 mt-1">Promoting safety and respect for all.</p>
+              <div class="mt-3 flex items-center justify-between">
+                <span class="text-xs px-2 py-1 rounded-full bg-brand/10 text-brand">Panels</span>
+                <a class="text-sm text-brand hover:underline" href="agenda.html">Learn more →</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- card 4 -->
+          <article class="agenda-card reveal">
+            <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1600&q=80" alt="Environment">
+            <div class="p-5">
+              <div class="text-3xl">🌱</div><h3 class="font-semibold text-darkblue mt-2">Environment</h3>
+              <p class="text-sm text-gray-600 mt-1">Tree Day and hands-on eco care.</p>
+              <div class="mt-3 flex items-center justify-between">
+                <span class="text-xs px-2 py-1 rounded-full bg-brand/10 text-brand">Hands-on</span>
+                <a class="text-sm text-brand hover:underline" href="agenda.html">Learn more →</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- card 5 -->
+          <article class="agenda-card reveal">
+            <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&q=80" alt="Celebrations">
+            <div class="p-5">
+              <div class="text-3xl">🎉</div><h3 class="font-semibold text-darkblue mt-2">Celebrations</h3>
+              <p class="text-sm text-gray-600 mt-1">Festivals & the Multifaith Dinner.</p>
+              <div class="mt-3 flex items-center justify-between">
+                <span class="text-xs px-2 py-1 rounded-full bg-brand/10 text-brand">Tickets</span>
+                <a class="text-sm text-brand hover:underline" href="agenda.html">Learn more →</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- counters -->
+        <div class="counters px-4">
+          <div class="stat reveal"><div class="text-3xl font-bold text-darkblue counter" data-count="1200">0</div><div class="mt-1 text-gray-600">Attendees last year</div></div>
+          <div class="stat reveal"><div class="text-3xl font-bold text-darkblue counter" data-count="40">0</div><div class="mt-1 text-gray-600">Partner orgs & faith groups</div></div>
+          <div class="stat reveal"><div class="text-3xl font-bold text-darkblue counter" data-count="98">0</div><div class="mt-1 text-gray-600">Would recommend a friend</div></div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- NOTIFY ME -->
-  <section class="section py-16 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10 items-center">
-      <div class="reveal">
-        <h2 class="text-3xl font-bold">Be first to hear about events</h2>
-        <p class="text-gray-700 mt-2">Get friendly updates (no spam). You’ll hear about visits and dinners before they fill up.</p>
+    <!-- TESTIMONIALS -->
+    <section id="tests" aria-label="Testimonials">
+      <div class="max-w-7xl mx-auto px-4">
+        <h3 class="text-3xl font-bold text-darkblue">What people say</h3>
+        <div class="mt-6 overflow-hidden">
+          <div class="test-track" id="testTrack" aria-live="polite">
+            <div class="test-card reveal">
+              <h4 class="font-semibold">Community warmth</h4>
+              <p class="mt-2 text-gray-700">“I walked in knowing nobody and left with five new friends.”</p>
+              <div class="mt-3 text-sm text-gray-500">— Sana, Tarneit</div>
+            </div>
+            <div class="test-card reveal">
+              <h4 class="font-semibold">Lasting impact</h4>
+              <p class="mt-2 text-gray-700">“Our students still talk about the visit months later.”</p>
+              <div class="mt-3 text-sm text-gray-500">— Mr. Patel</div>
+            </div>
+            <div class="test-card reveal">
+              <h4 class="font-semibold">Joyful & inclusive</h4>
+              <p class="mt-2 text-gray-700">“Best community dinner in the West. Inclusive and eye-opening.”</p>
+              <div class="mt-3 text-sm text-gray-500">— Mark, Werribee</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <form class="reveal grid sm:grid-cols-[1fr_auto] gap-3">
-        <input type="email" required placeholder="Your email address"
-               class="rounded-xl border border-gray-300 px-4 py-3 focus:border-brand focus:ring-2 focus:ring-brand shadow-sm">
-        <button class="px-6 py-3 rounded-xl bg-brand text-white font-semibold shadow-glow hover:bg-brand-dark hover:scale-105 transition">
-          Notify Me
-        </button>
-      </form>
-    </div>
-  </section>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" aria-label="Gallery">
+      <div class="grid-g px-4">
+        <img src="https://images.unsplash.com/photo-1581093588401-22f1f1d9e9e0?auto=format&fit=crop&w=800&q=80" alt="" class="reveal" />
+        <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=800&q=80" alt="" class="reveal" />
+        <img src="https://images.unsplash.com/photo-1497493292307-31c376b6e479?auto=format&fit=crop&w=800&q=80" alt="" class="reveal" />
+        <img src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=800&q=80" alt="" class="reveal" />
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80" alt="" class="reveal" />
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="" class="reveal" />
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section id="contact" aria-label="Newsletter" class="newsletter">
+      <div class="card newsletter card p-6">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+          <div style="flex:1;min-width:220px">
+            <h3 class="text-2xl font-bold text-darkblue">Be first to hear about events</h3>
+            <p class="text-gray-600 mt-2">Get friendly updates (no spam). You’ll hear about visits and dinners before they fill up.</p>
+          </div>
+
+          <form id="newsletterForm" class="form-row" style="flex:1;min-width:260px;justify-content:flex-end">
+            <input id="emailInput" type="email" required placeholder="Your email address" class="rounded-xl border border-gray-300 px-4 py-3 flex-1" />
+            <button id="emailBtn" class="btn-primary">Notify Me</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
 
   <!-- FOOTER -->
   <footer class="bg-gray-900 text-white py-12">
@@ -383,70 +510,203 @@
     <div class="text-center text-xs text-gray-400 mt-8">© <span id="year"></span> Wyndham Interfaith Network</div>
   </footer>
 
-  <!-- Scripts -->
+  <!-- toast -->
+  <div id="toast" class="toast" aria-hidden="true"></div>
+
+  <!-- SCRIPTS: slide hero, reveal, counters, typewriter, events loop, testimonials -->
   <script>
-    // Year + mobile menu
+    // Year and mobile menu
     document.getElementById('year').textContent = new Date().getFullYear();
-    document.getElementById('menu-btn').onclick = () =>
-      document.getElementById('mobile-menu').classList.toggle('hidden');
-
-    // Reveal on scroll (sections & who-grid cards)
-    const revealEls=[...document.querySelectorAll('.reveal'), ...document.querySelectorAll('.who-card')];
-    const IO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');IO.unobserve(e.target);}})},{threshold:.25});
-    revealEls.forEach(el=>IO.observe(el));
-
-    // Hero slideshow
-    const slides=[...document.querySelectorAll('.slide')]; let si=0;
-    function show(n){slides.forEach((s,i)=>s.style.opacity=i===n?1:0)}
-    show(0); setInterval(()=>{si=(si+1)%slides.length; show(si)},5000);
-
-    // Typewriter (short words: Unity, Harmony, Respect, Belonging, Service)
-    const words=["Unity","Harmony","Respect","Belonging","Service"];
-    const twWord=document.getElementById('twWord');
-    let wi=0, ci=0, del=false;
-    function typeTick(){
-      const full=words[wi];
-      ci += del?-1:1;
-      twWord.textContent = full.slice(0,ci);
-      if(!del && ci===full.length){ setTimeout(()=>del=true, 700); }
-      if(del && ci===0){ del=false; wi=(wi+1)%words.length; }
-      setTimeout(typeTick, del?45:55);
+    const menuBtn = document.getElementById('menu-btn');
+    if (menuBtn) {
+      const mobileMenu = document.getElementById('mobile-menu');
+      menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
     }
-    typeTick();
 
-    // Counters 0 -> target
-    function animateCounter(el, target, duration=1500){
-      const start=0, t0=performance.now();
-      function step(now){const p=Math.min((now-t0)/duration,1);el.textContent=Math.floor(p*target).toLocaleString(); if(p<1)requestAnimationFrame(step);}
-      requestAnimationFrame(step);
-    }
-    const counters=document.querySelectorAll('.counter');
-    const counterIO=new IntersectionObserver(ents=>{
-      ents.forEach(ent=>{
-        if(ent.isIntersecting){
-          const el=ent.target, val=parseInt(el.dataset.count,10)||0;
-          animateCounter(el,val); counterIO.unobserve(el);
-        }
-      });
-    },{threshold:.5});
-    counters.forEach(c=>counterIO.observe(c));
+    // Respect reduced motion
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Countdown (animate from 0 first, then tick)
-    const dd=document.getElementById('dd'), hh=document.getElementById('hh'),
-          mm=document.getElementById('mm'), ss=document.getElementById('ss');
-    if(dd && hh && mm && ss){
-      const target=new Date('2025-09-27T11:30:00');
-      function parts(){const now=new Date();let d=Math.max(0,target-now);const D=Math.floor(d/86400000);d-=D*86400000;const H=Math.floor(d/3600000);d-=H*3600000;const M=Math.floor(d/60000);d-=M*60000;const S=Math.floor(d/1000);return {D,H,M,S};}
-      (function init(){const t=parts(); animateCounter(dd,t.D,1000); animateCounter(hh,t.H,1000); animateCounter(mm,t.M,1000); animateCounter(ss,t.S,1000);
-        setTimeout(()=>setInterval(()=>{const t=parts(); dd.textContent=t.D; hh.textContent=t.H; mm.textContent=t.M; ss.textContent=t.S;},1000),1100);
+    // Reveal via IntersectionObserver
+    (function initReveal(){
+      const els = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(en => {
+          if (en.isIntersecting) { en.target.classList.add('in'); obs.unobserve(en.target); }
+        });
+      }, {threshold: 0.18});
+      els.forEach(el => { if (reduce) el.classList.add('in'); else io.observe(el); });
+    })();
+
+    // Hero slideshow: cycle images, keep scale animation
+    (function heroSlides(){
+      const imgs = Array.from(document.querySelectorAll('#hero .hero-media img.hero-img'));
+      if (!imgs.length) return;
+      imgs.forEach((im,i)=>{ if(i===0) im.classList.add('active'); });
+      let idx = 0;
+      setInterval(()=> {
+        imgs[idx].classList.remove('active');
+        idx = (idx + 1) % imgs.length;
+        imgs[idx].classList.add('active');
+      }, 5500);
+      // subtle parallax on scroll (scale & translate)
+      if(!reduce) {
+        window.addEventListener('scroll', ()=> {
+          const rect = document.getElementById('hero').getBoundingClientRect();
+          const pct = Math.min(Math.max(-rect.top / (window.innerHeight || 1), 0), 1);
+          document.querySelectorAll('#hero .hero-media img.hero-img').forEach(im=>{
+            im.style.transform = `scale(${1 + pct*0.04}) translateY(${pct * -12}px)`;
+          });
+        }, {passive:true});
+      }
+    })();
+
+    // Typewriter in hero
+    (function typeHero(){
+      const words = ["Unity","Harmony","Respect","Belonging","Service"];
+      const tw = document.getElementById('twWord');
+      if(!tw) return;
+      let wi = 0, ci = 0, del=false;
+      function tick(){
+        const full = words[wi];
+        ci += del ? -1 : 1;
+        tw.textContent = full.slice(0,ci);
+        if(!del && ci === full.length) setTimeout(()=> del=true, 700);
+        if(del && ci === 0){ del=false; wi = (wi+1)%words.length; }
+        setTimeout(tick, del ? 45 : 70);
+      }
+      tick();
+    })();
+
+    // Counters (animate when visible)
+    (function counters(){
+      const els = document.querySelectorAll('.counter');
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if(!entry.isIntersecting) return;
+          const el = entry.target;
+          const to = parseInt(el.dataset.count||'0',10);
+          let start = null;
+          function step(ts){
+            if(!start) start = ts;
+            const p = Math.min((ts - start)/1400, 1);
+            el.textContent = Math.floor(p*to).toLocaleString();
+            if(p < 1) requestAnimationFrame(step);
+            else obs.unobserve(el);
+          }
+          requestAnimationFrame(step);
+        });
+      }, {threshold:.5});
+      els.forEach(e => { if(reduce) e.textContent = e.dataset.count; else io.observe(e); });
+    })();
+
+    // Countdown for hero spotlight
+    (function countdown(){
+      const dd = document.getElementById('dd'), hh = document.getElementById('hh'), mm = document.getElementById('mm'), ss = document.getElementById('ss');
+      if(!dd || !hh || !mm || !ss) return;
+      const target = new Date('2025-09-27T11:30:00');
+      function parts(){
+        const now = new Date();
+        let d = Math.max(0, target - now);
+        const D = Math.floor(d/86400000); d -= D*86400000;
+        const H = Math.floor(d/3600000); d -= H*3600000;
+        const M = Math.floor(d/60000); d -= M*60000;
+        const S = Math.floor(d/1000);
+        return {D,H,M,S};
+      }
+      (function tick(){
+        const t = parts();
+        dd.textContent = t.D; hh.textContent = String(t.H).padStart(2,'0'); mm.textContent = String(t.M).padStart(2,'0'); ss.textContent = String(t.S).padStart(2,'0');
+        setTimeout(tick,1000);
       })();
-    }
+    })();
 
-    // Testimonials carousel
-    const tTrack=document.getElementById('t-track'); const tDots=[...document.querySelectorAll('.t-dot')]; let ti=0;
-    function go(n){ti=(n+tDots.length)%tDots.length; tTrack.style.transform=`translateX(-${ti*100}%)`; tDots.forEach((d,i)=>d.style.backgroundColor=i===ti?'#2e7d32':'#d1d5db');}
-    go(0); setInterval(()=>go(ti+1),5000); tDots.forEach((d,i)=>d.addEventListener('click',()=>go(i)));
+    // Events scroller: continuous loop by translating track
+    (function eventsScroller(){
+      const track = document.getElementById('eventsTrack');
+      if(!track) return;
+      // duplicate children to create an infinite feel
+      const children = Array.from(track.children);
+      // if already duplicated, don't duplicate again
+      if(children.length > 0 && children.length < 12){
+        children.forEach(n => track.appendChild(n.cloneNode(true)));
+      }
+      let pos = 0;
+      let speed = 0.4; // px per frame ~ adjust for viewport
+      let raf;
+      function step(){
+        pos -= speed;
+        // width total
+        const width = track.scrollWidth;
+        if(Math.abs(pos) >= width/2) { pos = 0; } // reset for continuous loop feel
+        track.style.transform = `translateX(${pos}px)`;
+        raf = requestAnimationFrame(step);
+      }
+      // start slowly after small delay
+      setTimeout(()=> { if(!reduce) step(); }, 400);
+      // pause on hover
+      track.addEventListener('mouseenter', ()=> { cancelAnimationFrame(raf); });
+      track.addEventListener('mouseleave', ()=> { if(!reduce) step(); });
+    })();
+
+    // Testimonials auto-slide (horizontal marquee style with clones)
+    (function testimonials(){
+      const track = document.getElementById('testTrack');
+      if(!track) return;
+      const cards = Array.from(track.children);
+      if(cards.length < 2) return;
+      // duplicate to loop
+      cards.forEach(c => track.appendChild(c.cloneNode(true)));
+      let idx = 0;
+      const cardWidth = cards[0].getBoundingClientRect().width + 16;
+      let anim;
+      function move(){
+        idx++;
+        track.style.transition = 'transform .9s cubic-bezier(.2,.9,.25,1)';
+        track.style.transform = `translateX(-${idx * cardWidth}px)`;
+        if(idx >= cards.length){
+          setTimeout(()=>{ track.style.transition = 'none'; track.style.transform = 'translateX(0)'; idx = 0; }, 920);
+        }
+      }
+      let t = setInterval(move, 4200);
+      track.addEventListener('mouseenter', ()=> clearInterval(t));
+      track.addEventListener('mouseleave', ()=> t = setInterval(move,4200));
+    })();
+
+    // Micro interactions: seat decrement + toast
+    (function micro(){
+      const toast = document.getElementById('toast');
+      function showToast(msg){
+        toast.textContent = msg;
+        toast.style.opacity = '1'; toast.style.transform = 'translateY(0)'; toast.setAttribute('aria-hidden','false');
+        setTimeout(()=>{ toast.style.opacity = '0'; toast.style.transform = 'translateY(8px)'; toast.setAttribute('aria-hidden','true'); },2200);
+      }
+
+      document.querySelectorAll('.event-card button, #reserveHero').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          showToast('Reservation noted — we will contact you with details.');
+        });
+      });
+
+      document.getElementById('joinHero')?.addEventListener('click', ()=> showToast('Thanks — we will contact you with next steps.'));
+    })();
+
+    // Newsletter local handler
+    (function newsletter(){
+      const form = document.getElementById('newsletterForm');
+      if(!form) return;
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const email = document.getElementById('emailInput').value.trim();
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!re.test(email)){ alert('Please enter a valid email'); return; }
+        const btn = document.getElementById('emailBtn');
+        btn.textContent = 'Thanks!';
+        setTimeout(()=> btn.textContent = 'Notify Me', 1500);
+        form.reset();
+      });
+    })();
+
   </script>
 </body>
 </html>
-
